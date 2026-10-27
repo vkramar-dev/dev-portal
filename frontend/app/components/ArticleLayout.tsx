@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import { Box, Chip, Container, Divider, Link as MuiLink, Stack, Typography } from "@mui/material";
+import { Children, isValidElement, type ReactNode } from "react";
 import { Link } from "react-router";
+import { formatPublishedDate } from "../content";
 
 interface ArticleLink {
   title: string;
@@ -16,6 +16,21 @@ interface ArticleLayoutProps {
   children: ReactNode;
 }
 
+function renderBody(children: ReactNode) {
+  return Children.map(children, (child) => {
+    if (isValidElement(child) && child.type === "pre") {
+      return (
+        <figure className="fig">
+          <figcaption>FIG.</figcaption>
+          {child}
+        </figure>
+      );
+    }
+
+    return child;
+  });
+}
+
 export default function ArticleLayout({
   title,
   category,
@@ -24,82 +39,56 @@ export default function ArticleLayout({
   references,
   children,
 }: ArticleLayoutProps) {
-  const formattedDate = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${publishedAt}T00:00:00Z`));
+  const formattedDate = formatPublishedDate(publishedAt);
 
   return (
-    <Container component="article" maxWidth="md" sx={{ py: 5 }}>
-      <Box component="header" sx={{ mb: 4 }}>
-        <Stack direction="row" spacing={2} sx={{ mb: 2, alignItems: "center" }}>
-          <Chip label={category} size="small" color="primary" />
+    <article className="article-page">
+      <p className="sheet-index">ART / 001</p>
+      <table className="meta-table">
+        <tbody>
+          <tr>
+            <th scope="row">TITLE</th>
+            <td>
+              <h1>{title}</h1>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">CATEGORY</th>
+            <td>{category}</td>
+          </tr>
+          <tr>
+            <th scope="row">DATE</th>
+            <td>
+              <time dateTime={publishedAt}>{formattedDate}</time>
+            </td>
+          </tr>
+          {summary ? (
+            <tr>
+              <th scope="row">SUMMARY</th>
+              <td>{summary}</td>
+            </tr>
+          ) : null}
+        </tbody>
+      </table>
 
-          <Typography component="span" variant="body2" color="text.secondary">
-            Published: <time dateTime={publishedAt}>{formattedDate}</time>
-          </Typography>
-        </Stack>
+      <div className="article-body">{renderBody(children)}</div>
 
-        <Typography component="h1" variant="h3" gutterBottom>
-          {title}
-        </Typography>
-
-        {summary && (
-          <Typography component="p" variant="subtitle1" color="text.secondary">
-            {summary}
-          </Typography>
-        )}
-      </Box>
-
-      <Divider sx={{ mb: 4 }} />
-
-      <Box
-        component="section"
-        aria-label="Article content"
-        sx={{
-          "& p": {
-            lineHeight: 1.8,
-          },
-          "& pre": {
-            overflowX: "auto",
-            p: 2,
-            borderRadius: 1,
-            bgcolor: "action.hover",
-            lineHeight: 1.6,
-          },
-          "& code": {
-            fontFamily: "monospace",
-          },
-        }}
-      >
-        {children}
-      </Box>
-
-      {references && references.length > 0 && (
-        <Box component="section" aria-label="References" sx={{ mt: 5 }}>
-          <Divider sx={{ mb: 3 }} />
-
-          <Typography component="h2" variant="h6" gutterBottom>
-            References
-          </Typography>
-
-          <Box component="ul">
+      {references && references.length > 0 ? (
+        <section className="refs" aria-label="References">
+          <h2>References</h2>
+          <ul>
             {references.map((reference) => (
               <li key={reference.url}>
-                <MuiLink href={reference.url}>{reference.title}</MuiLink>
+                <a href={reference.url}>{reference.title}</a>
               </li>
             ))}
-          </Box>
-        </Box>
-      )}
+          </ul>
+        </section>
+      ) : null}
 
-      <Box component="footer" sx={{ mt: 5 }}>
-        <MuiLink component={Link} to="/">
-          Back to Home
-        </MuiLink>
-      </Box>
-    </Container>
+      <p className="return-line">
+        <Link to="/">Back to Home</Link>
+      </p>
+    </article>
   );
 }
