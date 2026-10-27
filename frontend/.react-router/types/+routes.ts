@@ -14,7 +14,31 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/articles": {
+    params: {};
+  };
   "/articles/dotnet-strings": {
+    params: {};
+  };
+  "/notes": {
+    params: {};
+  };
+  "/pitfalls": {
+    params: {};
+  };
+  "/guidelines": {
+    params: {};
+  };
+  "/quiz": {
+    params: {};
+  };
+  "/videos": {
+    params: {};
+  };
+  "/events": {
+    params: {};
+  };
+  "/about": {
     params: {};
   };
 };
@@ -22,20 +46,60 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/articles/dotnet-strings";
+    page: "/" | "/articles" | "/articles/dotnet-strings" | "/notes" | "/pitfalls" | "/guidelines" | "/quiz" | "/videos" | "/events" | "/about";
   };
   "routes/home.tsx": {
     id: "routes/home";
     page: "/";
   };
+  "routes/articles.tsx": {
+    id: "routes/articles";
+    page: "/articles";
+  };
   "routes/articles/dotnet-strings.tsx": {
     id: "routes/articles/dotnet-strings";
     page: "/articles/dotnet-strings";
+  };
+  "routes/notes.tsx": {
+    id: "routes/notes";
+    page: "/notes";
+  };
+  "routes/pitfalls.tsx": {
+    id: "routes/pitfalls";
+    page: "/pitfalls";
+  };
+  "routes/guidelines.tsx": {
+    id: "routes/guidelines";
+    page: "/guidelines";
+  };
+  "routes/quiz.tsx": {
+    id: "routes/quiz";
+    page: "/quiz";
+  };
+  "routes/videos.tsx": {
+    id: "routes/videos";
+    page: "/videos";
+  };
+  "routes/events.tsx": {
+    id: "routes/events";
+    page: "/events";
+  };
+  "routes/about.tsx": {
+    id: "routes/about";
+    page: "/about";
   };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
   "routes/home": typeof import("./app/routes/home.tsx");
+  "routes/articles": typeof import("./app/routes/articles.tsx");
   "routes/articles/dotnet-strings": typeof import("./app/routes/articles/dotnet-strings.tsx");
+  "routes/notes": typeof import("./app/routes/notes.tsx");
+  "routes/pitfalls": typeof import("./app/routes/pitfalls.tsx");
+  "routes/guidelines": typeof import("./app/routes/guidelines.tsx");
+  "routes/quiz": typeof import("./app/routes/quiz.tsx");
+  "routes/videos": typeof import("./app/routes/videos.tsx");
+  "routes/events": typeof import("./app/routes/events.tsx");
+  "routes/about": typeof import("./app/routes/about.tsx");
 };

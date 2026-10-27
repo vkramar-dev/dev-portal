@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import AppLayout from "./components/AppLayout";
+import "./styles/site.css";
 
 export default function App() {
   return (
@@ -11,10 +12,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <AppLayout>
-          <Outlet />
-        </AppLayout>
-
+        <AppLayout><Outlet /></AppLayout>
         <ScrollRestoration />
         <Scripts />
       </body>
