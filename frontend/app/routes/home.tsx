@@ -29,6 +29,25 @@ export function meta() {
   ];
 }
 
+function ResearchIcon() {
+  return (
+    <span className="home-research-art" aria-hidden="true">
+      <svg
+        viewBox="0 0 64 64"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M24 18 10 32l14 14" />
+        <path d="m40 18 14 14-14 14" />
+        <path d="m37 14-10 36" />
+      </svg>
+    </span>
+  );
+}
+
 export default function Home() {
   const latestResearch = [...publishedArticles]
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
@@ -55,7 +74,6 @@ export default function Home() {
 
       <section className="home-research" aria-labelledby="home-research-title">
         <div className="home-section-heading">
-          <h2 id="home-research-title"> </h2>
           <Link to="/articles" className="home-section-all-link">
             All articles <span aria-hidden="true">↗</span>
           </Link>
@@ -63,16 +81,19 @@ export default function Home() {
         <div className="home-research-list">
           {latestResearch.map((article) => (
             <article className="home-research-item" key={article.url}>
-              <div className="home-research-category">
-                {article.category} <span aria-hidden="true">·</span> {article.topic}
+              <ResearchIcon />
+              <div className="home-research-copy">
+                <div className="home-research-category">
+                  {article.category} <span aria-hidden="true">·</span> {article.topic}
+                </div>
+                <h3>
+                  <Link to={article.url}>{article.title}</Link>
+                </h3>
+                <p>{article.summary}</p>
+                <Link to={article.url} className="home-read-link">
+                  Read article <span aria-hidden="true">↗</span>
+                </Link>
               </div>
-              <h3>
-                <Link to={article.url}>{article.title}</Link>
-              </h3>
-              <p>{article.summary}</p>
-              <Link to={article.url} className="home-read-link">
-                Read article <span aria-hidden="true">↗</span>
-              </Link>
             </article>
           ))}
         </div>
