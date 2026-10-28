@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div className="site-shell home-page">
       <section className="home-intro" aria-labelledby="home-title">
-        <h1 id="home-title">.NET Engineering in Detail</h1>
+        <h1 id="home-title">Exploring .NET Engineering</h1>
         <p>DRIVEN BY CODE</p>
       </section>
 
