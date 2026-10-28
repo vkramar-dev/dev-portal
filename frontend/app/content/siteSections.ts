@@ -16,7 +16,9 @@ export const publishedArticles = [
   {
     title: "How .NET Stores Strings",
     url: "/articles/dotnet-strings",
-    summary: "UTF-16, string length, immutability and memory behavior in .NET.",
+    summary: "UTF-16 representation, string immutability, and the details behind .NET strings.",
     category: ".NET",
+    topic: "Runtime Internals",
+    publishedAt: "2026-10-23",
   },
 ] as const;

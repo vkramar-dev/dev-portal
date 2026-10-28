@@ -331,9 +331,10 @@ input:focus-visible {
   opacity: 0.85;
 }
 
-/* Home: intentionally small introduction, then alternating editorial rows. */
+/* Home: editorial introduction with published research up front.
+   Keep the initial viewport content-rich, including on laptop-sized displays. */
 .home-intro {
-  padding: 32px 0 34px;
+  padding: 24px 0 18px;
   text-align: center;
 }
 .home-intro h1 {
@@ -351,115 +352,101 @@ input:focus-visible {
   letter-spacing: 0.11em;
   font-weight: 550;
 }
-.home-section {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 20px;
-  min-height: 145px;
+.home-description {
+  max-width: 810px;
+  margin: 0 auto;
+  padding: 0 0 21px;
+}
+.home-description p {
+  margin: 0;
+  color: var(--pind-ink);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.home-description p + p {
+  margin-top: 9px;
+  color: var(--pind-muted);
+}
+.home-research,
+.home-topics {
   border-top: 1px solid var(--pind-line);
 }
-.home-section-copy {
-  max-width: 445px;
-  padding: 15px 0;
+.home-research {
+  padding: 19px 0 24px;
 }
-.home-section.right .home-section-copy {
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-  padding-left: 12px;
+.home-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
 }
-.home-section.right .home-section-art {
-  grid-column: 1;
-  grid-row: 1;
+.home-section-heading h2 {
+  margin: 0;
+  font: 400 clamp(24px, 2.2vw, 29px)/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
 }
-.home-section-kicker {
+.home-section-all-link,
+.home-read-link {
+  color: var(--pind-accent);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 650;
+}
+.home-section-all-link:hover,
+.home-read-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.home-research-list {
+  margin-top: 19px;
+}
+.home-research-item {
+  max-width: 790px;
+}
+.home-research-category {
   color: var(--pind-copper);
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 750;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  letter-spacing: 0.13em;
-  margin-bottom: 7px;
 }
-.home-section h2 {
-  margin: 0 0 4px;
-  font:
-    400 clamp(28px, 2.75vw, 41px)/1.08 Georgia,
-    "Times New Roman",
-    serif;
-  letter-spacing: -0.06em;
+.home-research-item h3 {
+  margin: 7px 0 6px;
+  font: 400 clamp(25px, 2.35vw, 32px)/1.15 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
 }
-.home-section h2 a {
+.home-research-item h3 a {
+  color: var(--pind-ink);
   text-decoration: none;
 }
-.home-section h2 a:hover {
+.home-research-item h3 a:hover {
   color: var(--pind-accent);
 }
-.home-section-subtitle {
-  color: var(--pind-accent);
-  font-size: 12px;
-  font-weight: 750;
-  margin-bottom: 7px;
-}
-.home-section p {
+.home-research-item p {
+  margin: 0 0 11px;
   color: var(--pind-muted);
   font-size: 13px;
-  line-height: 1.6;
-  margin: 0;
+  line-height: 1.55;
 }
-.home-section-art {
-  position: relative;
-  height: 108px;
-  min-width: 0;
-  display: block;
-  text-decoration: none;
-  opacity: 0.75;
+.home-topics {
+  padding: 20px 0 44px;
 }
-.home-section-art-symbol {
-  position: absolute;
-  top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  color: var(--pind-art);
-  font:
-    italic 400 67px/1 Georgia,
-    "Times New Roman",
-    serif;
+.home-topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 0;
+  margin: 17px 0 0;
+  list-style: none;
 }
-.home-section.right .home-section-art-symbol {
-  left: 70%;
-  color: var(--pind-art-warm);
-}
-.home-section-art::before {
-  content: "";
-  position: absolute;
-  left: 30%;
-  top: 50%;
-  width: 83px;
-  height: 83px;
-  border: 3px solid var(--pind-ring);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.65;
-}
-.home-section.right .home-section-art::before {
-  left: 70%;
-}
-.home-section-index {
-  position: absolute;
-  right: 9%;
-  top: 7%;
-  font-size: 10px;
-  color: var(--pind-muted);
-  font-weight: 750;
-}
-.home-section.right .home-section-index {
-  right: auto;
-  left: 9%;
-}
-.home-section-art:hover {
-  opacity: 1;
+.home-topic-list li {
+  padding: 7px 11px;
+  border: 1px solid var(--pind-line);
+  border-radius: 4px;
+  background: var(--pind-surface);
+  color: var(--pind-ink);
+  font-size: 12px;
+  line-height: 1.25;
 }
 
 /* Section listings are intentionally simple; editorial article design comes later. */
@@ -549,14 +536,6 @@ input:focus-visible {
   color: var(--pind-ink);
 }
 
-@media (min-width: 2200px) {
-  .home-section {
-    min-height: 154px;
-  }
-  .home-section-copy {
-    max-width: 510px;
-  }
-}
 @media (max-width: 1199px) {
   .site-brand-title {
     font-size: 24px;
@@ -613,16 +592,7 @@ input:focus-visible {
     font-size: 14px;
   }
   .home-intro {
-    padding: 27px 0 23px;
-  }
-  .home-section {
-    min-height: 132px;
-  }
-  .home-section-art {
-    height: 95px;
-  }
-  .home-section-art-symbol {
-    font-size: 60px;
+    padding: 22px 0 16px;
   }
 }
 @media (max-width: 600px) {
@@ -659,7 +629,7 @@ input:focus-visible {
     display: none;
   }
   .home-intro {
-    padding: 21px 0 23px;
+    padding: 21px 0 17px;
   }
   .home-intro h1 {
     font-size: clamp(23px, 6.2vw, 30px);
@@ -667,30 +637,20 @@ input:focus-visible {
   .home-intro p {
     font-size: 10px;
   }
-  .home-section {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
+  .home-description {
+    padding-bottom: 18px;
   }
-  .home-section-copy,
-  .home-section.right .home-section-copy {
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: stretch;
-    max-width: none;
-    padding: 21px 0;
-  }
-  .home-section.right .home-section-copy {
-    padding-left: 0;
-  }
-  .home-section-art,
-  .home-section.right .home-section-art {
-    display: none;
-  }
-  .home-section h2 {
-    font-size: 29px;
-  }
-  .home-section p {
+  .home-description p {
     font-size: 13px;
+  }
+  .home-research {
+    padding: 17px 0 22px;
+  }
+  .home-research-list {
+    margin-top: 15px;
+  }
+  .home-topics {
+    padding: 18px 0 34px;
   }
   .site-footer {
     flex-direction: column;

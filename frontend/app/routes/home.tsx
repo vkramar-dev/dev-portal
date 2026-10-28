@@ -1,36 +1,88 @@
 import { Link } from "react-router";
-import { siteSections } from "../content/siteSections";
+import { publishedArticles } from "../content/siteSections";
+
+const topics = [
+  ".NET Runtime",
+  "C#",
+  "ASP.NET Core",
+  "Entity Framework",
+  "SQL Server",
+  "Performance",
+  "Concurrency",
+  "Security",
+  "Architecture",
+] as const;
 
 export function meta() {
   return [
     { title: "Programming in Depth | .NET Engineering in Detail" },
-    { name: "description", content: "Programming in Depth: in-depth .NET research, engineering notes, common pitfalls, guidelines, quizzes and technical discussions." },
+    {
+      name: "description",
+      content:
+        "Engineering behind real-world .NET applications: CLR, ASP.NET Core, EF Core, SQL Server, software architecture, performance and security.",
+    },
   ];
 }
 
 export default function Home() {
+  const latestResearch = [...publishedArticles]
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    .slice(0, 3);
+
   return (
     <div className="site-shell home-page">
       <section className="home-intro" aria-labelledby="home-title">
         <h1 id="home-title">.NET Engineering in Detail</h1>
         <p>driven by code</p>
       </section>
-      <div className="home-sections" aria-label="Explore Programming in Depth">
-        {siteSections.map((section, index) => (
-          <section key={section.slug} className={`home-section ${index % 2 ? "right" : "left"}`} aria-labelledby={`home-section-${section.slug}`}>
-            <div className="home-section-copy">
-              <div className="home-section-kicker">{String(index + 1).padStart(2, "0")} / {section.kicker}</div>
-              <h2 id={`home-section-${section.slug}`}><Link to={`/${section.slug}`}>{section.title}</Link></h2>
-              <div className="home-section-subtitle">{section.kicker}</div>
-              <p>{section.description}</p>
-            </div>
-            <Link className="home-section-art" to={`/${section.slug}`} tabIndex={-1} aria-hidden="true">
-              <span className="home-section-index">{String(index + 1).padStart(2, "0")} / 08</span>
-              <span className="home-section-art-symbol">{section.symbol}</span>
-            </Link>
-          </section>
-        ))}
-      </div>
+
+      <section className="home-description" aria-label="About Programming in Depth">
+        <p>
+          Programming in Depth explores the engineering behind real-world .NET applications —
+          from C# and CLR internals to ASP.NET Core, Entity Framework, SQL Server, and modern
+          JavaScript frontends.
+        </p>
+        <p>
+          Technical investigations, experiments, and discussions about architecture,
+          performance, concurrency, security, and engineering trade-offs.
+        </p>
+      </section>
+
+      <section className="home-research" aria-labelledby="home-research-title">
+        <div className="home-section-heading">
+          <h2 id="home-research-title">Latest Research</h2>
+          <Link to="/articles" className="home-section-all-link">
+            All articles <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+        <div className="home-research-list">
+          {latestResearch.map((article) => (
+            <article className="home-research-item" key={article.url}>
+              <div className="home-research-category">
+                {article.category} <span aria-hidden="true">·</span> {article.topic}
+              </div>
+              <h3>
+                <Link to={article.url}>{article.title}</Link>
+              </h3>
+              <p>{article.summary}</p>
+              <Link to={article.url} className="home-read-link">
+                Read article <span aria-hidden="true">↗</span>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="home-topics" aria-labelledby="home-topics-title">
+        <div className="home-section-heading">
+          <h2 id="home-topics-title">Explore Topics</h2>
+        </div>
+        <ul className="home-topic-list" aria-label="Engineering topics covered by PinD">
+          {topics.map((topic) => (
+            <li key={topic}>{topic}</li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }
