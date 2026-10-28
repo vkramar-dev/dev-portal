@@ -11,6 +11,11 @@ const topics = [
   "Concurrency",
   "Security",
   "Architecture",
+  "ADO.NET",
+  "Scalability",
+  "Debugging",
+  "JS",
+  "React",
 ] as const;
 
 export function meta() {
@@ -33,24 +38,24 @@ export default function Home() {
     <div className="site-shell home-page">
       <section className="home-intro" aria-labelledby="home-title">
         <h1 id="home-title">.NET Engineering in Detail</h1>
-        <p>driven by code</p>
+        <p>DRIVEN BY CODE</p>
       </section>
 
       <section className="home-description" aria-label="About Programming in Depth">
         <p>
-          Programming in Depth explores the engineering behind real-world .NET applications —
-          from C# and CLR internals to ASP.NET Core, Entity Framework, SQL Server, and modern
-          JavaScript frontends.
+          Programming in Depth explores the engineering behind real-world .NET applications — from
+          C# and CLR internals to ASP.NET Core, Entity Framework, SQL Server, and modern JavaScript
+          frontends.
         </p>
         <p>
-          Technical investigations, experiments, and discussions about architecture,
-          performance, concurrency, security, and engineering trade-offs.
+          Technical investigations, experiments, and discussions about architecture, performance,
+          concurrency, security, and engineering trade-offs.
         </p>
       </section>
 
       <section className="home-research" aria-labelledby="home-research-title">
         <div className="home-section-heading">
-          <h2 id="home-research-title">Latest Research</h2>
+          <h2 id="home-research-title"> </h2>
           <Link to="/articles" className="home-section-all-link">
             All articles <span aria-hidden="true">↗</span>
           </Link>
@@ -75,7 +80,7 @@ export default function Home() {
 
       <section className="home-topics" aria-labelledby="home-topics-title">
         <div className="home-section-heading">
-          <h2 id="home-topics-title">Explore Topics</h2>
+          <h2 id="home-topics-title">Tags</h2>
         </div>
         <ul className="home-topic-list" aria-label="Engineering topics covered by PinD">
           {topics.map((topic) => (

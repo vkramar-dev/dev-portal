@@ -221,7 +221,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: clamp(13px, 1.05vw, 21px);
+  gap: clamp(18px, 1.4vw, 24px);
   border-top: 1px solid var(--pind-line);
   border-bottom: 1px solid var(--pind-line);
 }
@@ -334,45 +334,51 @@ input:focus-visible {
 /* Home: editorial introduction with published research up front.
    Keep the initial viewport content-rich, including on laptop-sized displays. */
 .home-intro {
-  padding: 24px 0 18px;
+  padding: 19px 0 15px;
   text-align: center;
 }
 .home-intro h1 {
-  margin: 0;
+  margin: 12px 0 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(26px, 2.55vw, 37px);
+  font-size: clamp(24px, 2.1vw, 26px);
   font-weight: 500;
   line-height: 1.13;
   letter-spacing: -0.05em;
 }
 .home-intro p {
-  margin: 6px 0 0;
+  margin: 7px 0 0;
   color: var(--pind-accent);
-  font-size: 11px;
-  letter-spacing: 0.11em;
-  font-weight: 550;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  font-weight: 750;
+  text-transform: uppercase;
 }
 .home-description {
   max-width: 810px;
   margin: 0 auto;
-  padding: 0 0 21px;
+  padding: 0 0 20px;
 }
 .home-description p {
   margin: 0;
   color: var(--pind-ink);
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.48;
+  letter-spacing: -0.005em;
 }
 .home-description p + p {
   margin-top: 9px;
   color: var(--pind-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+  letter-spacing: normal;
+  opacity: 0.84;
 }
 .home-research,
 .home-topics {
   border-top: 1px solid var(--pind-line);
 }
 .home-research {
-  padding: 19px 0 24px;
+  padding: 16px 0 19px;
 }
 .home-section-heading {
   display: flex;
@@ -382,15 +388,18 @@ input:focus-visible {
 }
 .home-section-heading h2 {
   margin: 0;
-  font: 400 clamp(24px, 2.2vw, 29px)/1.2 Georgia, "Times New Roman", serif;
-  letter-spacing: -0.045em;
+  font:
+    400 clamp(18px, 1.7vw, 21px)/1.2 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.025em;
 }
 .home-section-all-link,
 .home-read-link {
   color: var(--pind-accent);
   text-decoration: none;
-  font-size: 12px;
-  font-weight: 650;
+  font-size: 11.5px;
+  font-weight: 600;
 }
 .home-section-all-link:hover,
 .home-read-link:hover {
@@ -398,22 +407,25 @@ input:focus-visible {
   text-underline-offset: 4px;
 }
 .home-research-list {
-  margin-top: 19px;
+  margin-top: 13px;
 }
 .home-research-item {
   max-width: 790px;
 }
 .home-research-category {
   color: var(--pind-copper);
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: 0.11em;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .home-research-item h3 {
-  margin: 7px 0 6px;
-  font: 400 clamp(25px, 2.35vw, 32px)/1.15 Georgia, "Times New Roman", serif;
-  letter-spacing: -0.045em;
+  margin: 6px 0 5px;
+  font:
+    400 clamp(18px, 1.65vw, 21px)/1.2 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.025em;
 }
 .home-research-item h3 a {
   color: var(--pind-ink);
@@ -423,20 +435,20 @@ input:focus-visible {
   color: var(--pind-accent);
 }
 .home-research-item p {
-  margin: 0 0 11px;
+  margin: 0 0 8px;
   color: var(--pind-muted);
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12.5px;
+  line-height: 1.5;
 }
 .home-topics {
-  padding: 20px 0 44px;
+  padding: 17px 0 38px;
 }
 .home-topic-list {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
   padding: 0;
-  margin: 17px 0 0;
+  margin: 13px 0 0;
   list-style: none;
 }
 .home-topic-list li {
@@ -551,7 +563,7 @@ input:focus-visible {
     gap: 13px;
   }
   .header-navigation {
-    gap: 15px;
+    gap: 17px;
   }
 }
 @media (max-width: 980px) {
@@ -632,16 +644,19 @@ input:focus-visible {
     padding: 21px 0 17px;
   }
   .home-intro h1 {
-    font-size: clamp(23px, 6.2vw, 30px);
-  }
-  .home-intro p {
-    font-size: 10px;
+    font-size: 24px;
   }
   .home-description {
     padding-bottom: 18px;
   }
   .home-description p {
-    font-size: 13px;
+    font-size: 14px;
+  }
+  .home-description p + p {
+    font-size: 12px;
+  }
+  .home-research-item h3 {
+    font-size: 22px;
   }
   .home-research {
     padding: 17px 0 22px;
