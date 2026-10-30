@@ -1,6 +1,8 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import AppLayout from "./components/AppLayout";
 import "./styles/site.css";
+import "./styles/publication.css";
+import "./styles/catalog.css";
 
 export default function App() {
   return (

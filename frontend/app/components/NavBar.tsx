@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { publishedArticles, siteSections } from "../content/siteSections";
+import { publicationPreviews } from "../content/publicationPreviews";
 
 function SearchIcon() {
   return (
@@ -60,6 +61,12 @@ const searchable = [
     description: item.summary,
     url: item.url,
     kind: "Article",
+  })),
+  ...publicationPreviews.map((item) => ({
+    title: item.title,
+    description: item.summary,
+    url: item.url,
+    kind: "Design preview",
   })),
 ];
 
@@ -188,10 +195,10 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
                   </button>
                 ))
               ) : (
-                <p className="search-empty">No matching sections or published articles.</p>
+                <p className="search-empty">No matching sections or publications.</p>
               )}
               <p className="search-hint">
-                Search currently covers section descriptions and published article titles.
+                Search currently covers sections, publication titles, and layout previews (not full article text).
               </p>
             </div>
           )}

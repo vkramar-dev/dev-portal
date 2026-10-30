@@ -1,4 +1,4 @@
-import SectionLanding from "../components/SectionLanding";
+import PublicationCatalog from "../components/catalog/PublicationCatalog";
 
 export function meta() {
   return [
@@ -8,5 +8,5 @@ export function meta() {
 }
 
 export default function ArticlesPage() {
-  return <SectionLanding slug="articles" />;
+  return <PublicationCatalog section="articles" title="Articles" />;
 }

@@ -20,13 +20,28 @@ type Pages = {
   "/articles/dotnet-strings": {
     params: {};
   };
+  "/articles/dotnet-garbage-collection": {
+    params: {};
+  };
+  "/articles/memory-in-dotnet": {
+    params: {};
+  };
   "/notes": {
+    params: {};
+  };
+  "/notes/string-length": {
     params: {};
   };
   "/pitfalls": {
     params: {};
   };
+  "/pitfalls/blocking-on-async": {
+    params: {};
+  };
   "/guidelines": {
+    params: {};
+  };
+  "/guidelines/ef-core-tracking": {
     params: {};
   };
   "/quiz": {
@@ -46,7 +61,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/articles" | "/articles/dotnet-strings" | "/notes" | "/pitfalls" | "/guidelines" | "/quiz" | "/videos" | "/events" | "/about";
+    page: "/" | "/articles" | "/articles/dotnet-strings" | "/articles/dotnet-garbage-collection" | "/articles/memory-in-dotnet" | "/notes" | "/notes/string-length" | "/pitfalls" | "/pitfalls/blocking-on-async" | "/guidelines" | "/guidelines/ef-core-tracking" | "/quiz" | "/videos" | "/events" | "/about";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -60,17 +75,37 @@ type RouteFiles = {
     id: "routes/articles/dotnet-strings";
     page: "/articles/dotnet-strings";
   };
+  "routes/articles/dotnet-garbage-collection.tsx": {
+    id: "routes/articles/dotnet-garbage-collection";
+    page: "/articles/dotnet-garbage-collection";
+  };
+  "routes/articles/memory-in-dotnet.tsx": {
+    id: "routes/articles/memory-in-dotnet";
+    page: "/articles/memory-in-dotnet";
+  };
   "routes/notes.tsx": {
     id: "routes/notes";
     page: "/notes";
+  };
+  "routes/notes/string-length.tsx": {
+    id: "routes/notes/string-length";
+    page: "/notes/string-length";
   };
   "routes/pitfalls.tsx": {
     id: "routes/pitfalls";
     page: "/pitfalls";
   };
+  "routes/pitfalls/blocking-on-async.tsx": {
+    id: "routes/pitfalls/blocking-on-async";
+    page: "/pitfalls/blocking-on-async";
+  };
   "routes/guidelines.tsx": {
     id: "routes/guidelines";
     page: "/guidelines";
+  };
+  "routes/guidelines/ef-core-tracking.tsx": {
+    id: "routes/guidelines/ef-core-tracking";
+    page: "/guidelines/ef-core-tracking";
   };
   "routes/quiz.tsx": {
     id: "routes/quiz";
@@ -95,9 +130,14 @@ type RouteModules = {
   "routes/home": typeof import("./app/routes/home.tsx");
   "routes/articles": typeof import("./app/routes/articles.tsx");
   "routes/articles/dotnet-strings": typeof import("./app/routes/articles/dotnet-strings.tsx");
+  "routes/articles/dotnet-garbage-collection": typeof import("./app/routes/articles/dotnet-garbage-collection.tsx");
+  "routes/articles/memory-in-dotnet": typeof import("./app/routes/articles/memory-in-dotnet.tsx");
   "routes/notes": typeof import("./app/routes/notes.tsx");
+  "routes/notes/string-length": typeof import("./app/routes/notes/string-length.tsx");
   "routes/pitfalls": typeof import("./app/routes/pitfalls.tsx");
+  "routes/pitfalls/blocking-on-async": typeof import("./app/routes/pitfalls/blocking-on-async.tsx");
   "routes/guidelines": typeof import("./app/routes/guidelines.tsx");
+  "routes/guidelines/ef-core-tracking": typeof import("./app/routes/guidelines/ef-core-tracking.tsx");
   "routes/quiz": typeof import("./app/routes/quiz.tsx");
   "routes/videos": typeof import("./app/routes/videos.tsx");
   "routes/events": typeof import("./app/routes/events.tsx");

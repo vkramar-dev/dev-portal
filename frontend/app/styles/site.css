@@ -531,32 +531,6 @@ input:focus-visible {
   color: var(--pind-accent);
   text-underline-offset: 3px;
 }
-.article-list-item {
-  border-top: 1px solid var(--pind-line);
-  padding: 18px 0;
-}
-.article-list-item span {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--pind-copper);
-  text-transform: uppercase;
-}
-.article-list-item h3 {
-  font:
-    400 27px/1.15 Georgia,
-    serif;
-  margin: 7px 0;
-}
-.article-list-item h3 a {
-  color: var(--pind-ink);
-  text-decoration: none;
-}
-.article-list-item h3 a:hover {
-  color: var(--pind-accent);
-}
-.article-list-item p {
-  margin: 0;
-}
 .site-footer {
   display: flex;
   justify-content: space-between;

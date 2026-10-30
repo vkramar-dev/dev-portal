@@ -72,7 +72,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="home-research" aria-labelledby="home-research-title">
+      <section className="home-research" aria-label="Latest research">
         <div className="home-section-heading">
           <Link to="/articles" className="home-section-all-link">
             All articles <span aria-hidden="true">↗</span>
