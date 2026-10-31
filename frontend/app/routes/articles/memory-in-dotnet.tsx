@@ -34,8 +34,16 @@ const references = [
     url: "https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.nativememory",
   },
   {
+    title: "Microsoft Learn — Marshal.AllocHGlobal",
+    url: "https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.allochglobal",
+  },
+  {
     title: "Microsoft Learn — EDITBIN /STACK",
     url: "https://learn.microsoft.com/en-us/cpp/build/reference/stack",
+  },
+  {
+    title: "Microsoft Learn — Threading configuration (.NET 10+)",
+    url: "https://learn.microsoft.com/en-us/dotnet/core/runtime-config/threading",
   },
 ];
 
@@ -67,16 +75,110 @@ function Paragraph({ children }: { children: ReactNode }) {
   );
 }
 
+// A lightweight C# highlighter for the article's short, static examples.
+// No runtime parser or syntax-highlighting dependency is required.
+const codeTokenPattern =
+  /\/\/.*$|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:abstract|as|async|await|bool|break|byte|catch|char|class|const|decimal|double|else|false|finally|float|for|foreach|if|int|internal|is|long|namespace|new|null|object|out|override|private|protected|public|readonly|ref|return|short|stackalloc|static|string|struct|this|throw|true|try|typeof|unsafe|using|var|void|while)\b|\b[A-Z][A-Za-z0-9_]*\b|\b\d[\d_]*(?:\.\d[\d_]*)?\b/g;
+
+function highlightCodeLine(line: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let previousEnd = 0;
+
+  for (const match of line.matchAll(codeTokenPattern)) {
+    const index = match.index ?? 0;
+    if (index > previousEnd) parts.push(line.slice(previousEnd, index));
+
+    const token = match[0];
+    const color = token.startsWith("//")
+      ? "text.secondary"
+      : token.startsWith('"') || token.startsWith("'")
+        ? "success.main"
+        : /^\d/.test(token)
+          ? "secondary.main"
+          : /^[A-Z]/.test(token)
+            ? "info.main"
+            : "primary.main";
+
+    parts.push(
+      <Box component="span" key={`${index}-${token}`} sx={{ color, fontWeight: 500 }}>
+        {token}
+      </Box>,
+    );
+    previousEnd = index + token.length;
+  }
+
+  if (previousEnd < line.length) parts.push(line.slice(previousEnd));
+  return parts;
+}
+
 function CodeExample({ code, title }: { code: string; title?: string }) {
+  const lines = code.replace(/\n$/, "").split("\n");
+
   return (
-    <Box sx={{ my: 2.5 }}>
-      {title && (
-        <Typography component="p" variant="caption" color="text.secondary" sx={{ mb: 1 }}>
-          {title}
+    <Box
+      sx={{
+        my: 2.5,
+        border: "1px solid",
+        borderColor: "divider",
+        borderLeft: "3px solid",
+        borderLeftColor: "primary.main",
+        borderRadius: 1.5,
+        overflow: "hidden",
+        bgcolor: "background.paper",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 1.75,
+          py: 0.75,
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          bgcolor: "action.hover",
+        }}
+      >
+        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
+          {title ?? "C#"}
         </Typography>
-      )}
-      <Box component="pre" sx={{ m: 0, fontSize: "0.88rem" }}>
-        <code>{code}</code>
+      </Box>
+
+      <Box sx={{ overflowX: "auto", py: 1.25 }}>
+        <Box
+          component="pre"
+          sx={{
+            "&&": {
+              m: 0,
+              p: 0,
+              bgcolor: "transparent",
+              borderRadius: 0,
+              fontSize: "0.86rem",
+              lineHeight: 1.85,
+              overflow: "visible",
+            },
+          }}
+        >
+          <Box component="code" sx={{ display: "block", fontFamily: '"Cascadia Code", Consolas, Monaco, monospace' }}>
+            {lines.map((line, index) => (
+              <Box
+                component="span"
+                key={index}
+                sx={{
+                  display: "flex",
+                  width: "max-content",
+                  minWidth: "100%",
+                  whiteSpace: "pre",
+                  "&:hover": { bgcolor: "action.hover" },
+                }}
+              >
+                <Box component="span" sx={{ px: 2 }}>
+                  {highlightCodeLine(line)}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
@@ -204,23 +306,17 @@ function MemoryLayoutFigure() {
           <MemoryRegion title="Native memory" detail="Unmanaged allocations" />
         </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1.25 }}>
-          <Box
-            sx={{
-              borderLeft: "2px solid",
-              borderColor: "text.disabled",
-              px: 1.5,
-              py: 0.25,
-              maxWidth: 310,
-            }}
+        <Box sx={{ display: "flex", justifyContent: "flex-start", mt: 0.75, pl: 0.25 }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ fontSize: "0.69rem", letterSpacing: "0.01em" }}
           >
-            <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-              CPU: registers · L1 · L2 · L3
-            </Typography>
-            <Typography variant="caption" color="text.disabled">
-              Hardware storage, not a separate region of the process address space
-            </Typography>
-          </Box>
+            CPU · registers · L1 / L2 / L3
+            <Box component="span" sx={{ ml: 1, color: "text.disabled" }}>
+              (hardware-managed)
+            </Box>
+          </Typography>
         </Box>
       </Box>
       <Typography
@@ -231,6 +327,142 @@ function MemoryLayoutFigure() {
         sx={{ mt: 1.25, lineHeight: 1.6 }}
       >
         Figure 1. Simplified Memory Layout of a Single-Threaded .NET Process.
+      </Typography>
+    </Box>
+  );
+}
+
+/** Figure 2 — the author's three-column SOH / LOH / POH sketch. */
+function ManagedHeapFigure() {
+  return (
+    <Box component="figure" aria-labelledby="managed-heap-caption" sx={{ my: 4, mx: 0 }}>
+      <Box sx={{ overflowX: "auto", pb: 1 }}>
+        <Box
+          role="img"
+          aria-label="Conceptual managed heap: separate SOH, LOH, and POH regions. The SOH includes generations 0, 1, and 2, with promotion from younger to older generations."
+          sx={{
+            border: "1px solid",
+            borderColor: "primary.main",
+            borderRadius: 2,
+            bgcolor: "background.default",
+            p: { xs: 1.5, sm: 2 },
+            minWidth: 490,
+            maxWidth: 660,
+            mx: "auto",
+          }}
+        >
+          <Typography
+            variant="subtitle1"
+            sx={{ textAlign: "center", color: "primary.main", fontWeight: 700, mb: 1.5 }}
+          >
+            Managed Heap
+          </Typography>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gap: { xs: 2, sm: 3 },
+              px: { xs: 0, sm: 1 },
+              pb: 0.5,
+            }}
+          >
+            <Box
+              sx={{
+                border: "2px solid",
+                borderColor: "primary.main",
+                borderRadius: 1,
+                bgcolor: "background.paper",
+                height: 236,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                p: 1,
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>SOH</Typography>
+              <Typography variant="caption" sx={{ lineHeight: 1.2 }}>Small Object Heap</Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
+                {"< 85,000 bytes"}*
+              </Typography>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 0.1,
+                  width: "100%",
+                  mt: 0.75,
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 0</Typography>
+                <Typography aria-hidden="true" variant="caption" color="primary.main" sx={{ lineHeight: 1.1 }}>↓</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 1</Typography>
+                <Typography aria-hidden="true" variant="caption" color="primary.main" sx={{ lineHeight: 1.1 }}>↓</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 2</Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                border: "2px solid",
+                borderColor: "primary.main",
+                borderRadius: 1,
+                bgcolor: "background.paper",
+                height: 236,
+                p: 1,
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>LOH</Typography>
+              <Typography variant="caption" sx={{ display: "block", lineHeight: 1.2 }}>
+                Large Object Heap
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+                ≥ 85,000 bytes*
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                border: "2px solid",
+                borderColor: "primary.main",
+                borderRadius: 1,
+                bgcolor: "background.paper",
+                height: 236,
+                p: 1,
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>POH</Typography>
+              <Typography variant="caption" sx={{ display: "block", lineHeight: 1.2 }}>
+                Pinned Object Heap
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+                Pinned allocations
+              </Typography>
+            </Box>
+          </Box>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ display: "block", mt: 1.25, fontSize: "0.68rem", textAlign: "center" }}
+          >
+            * Default LOH threshold; the size includes object overhead.
+          </Typography>
+        </Box>
+      </Box>
+      <Typography
+        id="managed-heap-caption"
+        component="figcaption"
+        variant="body2"
+        color="text.secondary"
+        sx={{ mt: 1, lineHeight: 1.6 }}
+      >
+        Figure 2. Inside the Managed Heap: SOH, LOH, and POH (conceptual, not to scale).
       </Typography>
     </Box>
   );
@@ -275,8 +507,8 @@ export default function MemoryInDotNet() {
       <Paragraph>
         Every engineer building professional .NET applications should understand where data is
         stored, how different memory regions behave, and how code can influence allocation and
-        lifetime. This article explores those regions, their characteristics, and their impact on
-        application performance.
+        lifetime. This article maps these regions so developers can recognize and distinguish them
+        in real applications.
       </Paragraph>
 
       <SectionHeading id="memory-overview">1. Memory Overview</SectionHeading>
@@ -287,46 +519,75 @@ export default function MemoryInDotNet() {
       </Paragraph>
       <MemoryLayoutFigure />
       <Paragraph>
-        The diagram shows a process with one thread. A new thread means another stack, while managed
-        objects, static storage, and executable code always remain part of the same process.
+        The diagram illustrates a process with a single thread. Each additional thread has its own
+        stack, while the managed heap, static storage, and executable code belong to the process
+        rather than to any individual thread. CPU registers and caches are shown separately because
+        they are hardware resources, not regions of the process's virtual address space.
       </Paragraph>
 
       <SectionHeading id="thread-stack">2. Thread Stack</SectionHeading>
       <Paragraph>
-        Every thread has its own stack. It supports method execution: stack frames can contain local
-        values, references, saved state, and information needed to resume a caller. Like the stack
-        in C and C++, it follows the nested flow of function calls.
+        Each thread has its own stack. It tracks nested method calls and may contain local values,
+        references, return addresses, and other execution state. Like the call stack in C and C++,
+        its frames follow the flow of method calls.
       </Paragraph>
       <CodeExample
-        code={`int number = 7;
-double factor = 1.5;
-Customer customer = new();`}
+        code={`int number = 7;               // 4-byte value
+double factor = 1.5;          // 8-byte value
+Customer customer = new();    // 8-byte reference on x64; object usually on the heap`}
       />
       <Paragraph>
-        An <code>int</code> represents 32 bits of value; on a typical 64-bit CoreCLR process, an
-        object reference occupies 8 bytes. The <code>Customer</code> object itself is normally
-        allocated in the managed heap. The local reference and the object are different things.
+        In a simplified x64 stack-frame model, <code>number</code> occupies 4 bytes,
+        <code> factor</code> occupies 8 bytes, and <code>customer</code> holds an 8-byte reference —
+        all within the thread stack. The <code>Customer</code> object's data, however, resides
+        separately, typically in the Small Object Heap (SOH).
       </Paragraph>
       <Paragraph>
-        This is a useful conceptual model, not a promise about physical placement. The optimizing
-        JIT may keep locals in registers, eliminate them, or move execution state elsewhere when
-        necessary. Stack space is limited, and data allocated directly on a stack cannot outlive the
-        corresponding stack frame.
+        Arrays make this distinction even clearer. Consider a small byte array with 100 elements.
+        Besides its element data, the array object contains header and length information:
+      </Paragraph>
+      <CodeExample
+        code={`byte[] buffer = new byte[100]; // x64: 8-byte local reference + SOH array`}
+      />
+      <Paragraph>
+        The local variable <code>buffer</code> occupies 8 bytes on the stack and holds a reference
+        to an array in the SOH. The array's 100 bytes of element data, together with its metadata,
+        are stored separately in the managed heap. The array belongs to the SOH because its total
+        size is below the LOH threshold. If we only need a small temporary buffer within the
+        current method, we can allocate those bytes directly on the stack instead:
+      </Paragraph>
+      <CodeExample
+        code={`Span<byte> buffer = stackalloc byte[100]; // 100 contiguous bytes on the stack`}
+      />
+      <Paragraph>
+        This allocates 100 contiguous bytes on the stack without creating a managed array.
+        <code> Span&lt;byte&gt;</code> describes that memory; it does not own a separate 100-byte
+        array. Unlike a newly created managed array, <code>stackalloc</code> memory is not guaranteed
+        to be zero-initialized. Stack-allocated data must not outlive its stack frame, and large
+        allocations can cause a stack overflow.
+      </Paragraph>
+      <Paragraph>
+        These examples illustrate a simplified memory model, not guaranteed stack slots. With
+        JIT optimizations enabled, local values may be held in CPU registers, removed entirely,
+        or, in some cases, reference-type heap allocations may be avoided through escape analysis.
       </Paragraph>
       <Paragraph>
         Stack size depends on the runtime, operating system, and how a thread is created. On
-        Windows, the executable's stack reservation can be adjusted with <code>EDITBIN /STACK</code>
-        ; an explicitly created <code>Thread</code> can also request a stack size. These are
-        specialized controls, not everyday memory-management tools.
+        Windows, <code>EDITBIN /STACK</code> can change an executable's stack reservation. On Linux,
+        launching a process with <code>ulimit -s</code> sets the main thread's stack limit and may
+        affect other threads depending on the native threading implementation. Starting with .NET 10,
+        <code> System.Threading.DefaultStackSize</code> in <code>runtimeconfig.json</code> can set
+        the default for threads created by the runtime on either platform. The <code>Thread</code>{" "}
+        constructor also offers a stack-size argument. These are specialized controls.
       </Paragraph>
 
       <SectionHeading id="managed-heap">3. Managed Heap</SectionHeading>
       <Paragraph>
-        Most managed objects are allocated on the managed heap. The CLR tracks their reachability
+        The managed heap is the usual home for managed objects. The CLR tracks their reachability
         and reclaims unreachable objects through garbage collection. The heap is commonly viewed as
         three areas: SOH, LOH, and POH.
       </Paragraph>
-      <FigurePlaceholder number={2} title="Inside the Managed Heap: SOH, LOH, and POH" />
+      <ManagedHeapFigure />
 
       <Subheading id="soh">3.1 Small Object Heap (SOH)</Subheading>
       <Paragraph>
@@ -409,24 +670,23 @@ int[] numbers = new int[100];`}
       <CodeExample
         code={`using System.Runtime.InteropServices;
 
-unsafe
+IntPtr memory = Marshal.AllocHGlobal(1024);
+try
 {
-    void* memory = NativeMemory.Alloc(1024);
-    try
-    {
-        // Use the native buffer.
-    }
-    finally
-    {
-        NativeMemory.Free(memory);
-    }
+    Marshal.WriteByte(memory, 0, 42); // Write one byte at offset 0.
+}
+finally
+{
+    Marshal.FreeHGlobal(memory);
 }`}
       />
       <Paragraph>
-        Native allocation is not inherently an anti-pattern; it is useful for interop and
-        specialized performance work. The risk is an allocation whose lifetime is not correctly
-        managed. The GC does not automatically free memory returned by
-        <code> NativeMemory.Alloc</code>.
+        This example uses <code>Marshal.AllocHGlobal</code> to avoid C# unsafe pointer syntax.
+        The returned <code>IntPtr</code> is an address, not a safe handle: incorrect access or
+        failure to release the allocation can still cause serious problems. The GC does not free
+        this memory automatically. For new applications on modern .NET, <code>NativeMemory</code>
+        is the preferred low-level allocator, although its pointer-based API requires an unsafe
+        context.
       </Paragraph>
 
       <SectionHeading id="cpu-storage">7. CPU Registers and Caches</SectionHeading>
