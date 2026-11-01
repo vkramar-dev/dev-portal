@@ -7,7 +7,7 @@ const draftPublicationDate = "2026-10-30";
 
 export function meta() {
   return [
-    { title: "Memory in .NET | Programming in Depth" },
+    { title: "Memory in .NET — Overview | Programming in Depth" },
     {
       name: "description",
       content:
@@ -36,6 +36,18 @@ const references = [
   {
     title: "Microsoft Learn — Marshal.AllocHGlobal",
     url: "https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.allochglobal",
+  },
+  {
+    title: "Microsoft Learn — stackalloc expression",
+    url: "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc",
+  },
+  {
+    title: "Microsoft Learn — GC.AllocateArray",
+    url: "https://learn.microsoft.com/en-us/dotnet/api/system.gc.allocatearray",
+  },
+  {
+    title: "Microsoft Learn — ArrayPool<T>",
+    url: "https://learn.microsoft.com/en-us/dotnet/api/system.buffers.arraypool-1.shared",
   },
   {
     title: "Microsoft Learn — EDITBIN /STACK",
@@ -159,7 +171,10 @@ function CodeExample({ code, title }: { code: string; title?: string }) {
             },
           }}
         >
-          <Box component="code" sx={{ display: "block", fontFamily: '"Cascadia Code", Consolas, Monaco, monospace' }}>
+          <Box
+            component="code"
+            sx={{ display: "block", fontFamily: '"Cascadia Code", Consolas, Monaco, monospace' }}
+          >
             {lines.map((line, index) => (
               <Box
                 component="span"
@@ -381,8 +396,12 @@ function ManagedHeapFigure() {
                 textAlign: "center",
               }}
             >
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>SOH</Typography>
-              <Typography variant="caption" sx={{ lineHeight: 1.2 }}>Small Object Heap</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                SOH
+              </Typography>
+              <Typography variant="caption" sx={{ lineHeight: 1.2 }}>
+                Small Object Heap
+              </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
                 {"< 85,000 bytes"}*
               </Typography>
@@ -398,11 +417,31 @@ function ManagedHeapFigure() {
                   mt: 0.75,
                 }}
               >
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 0</Typography>
-                <Typography aria-hidden="true" variant="caption" color="primary.main" sx={{ lineHeight: 1.1 }}>↓</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 1</Typography>
-                <Typography aria-hidden="true" variant="caption" color="primary.main" sx={{ lineHeight: 1.1 }}>↓</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>Gen 2</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Gen 0
+                </Typography>
+                <Typography
+                  aria-hidden="true"
+                  variant="caption"
+                  color="primary.main"
+                  sx={{ lineHeight: 1.1 }}
+                >
+                  ↓
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Gen 1
+                </Typography>
+                <Typography
+                  aria-hidden="true"
+                  variant="caption"
+                  color="primary.main"
+                  sx={{ lineHeight: 1.1 }}
+                >
+                  ↓
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Gen 2
+                </Typography>
               </Box>
             </Box>
 
@@ -417,11 +456,17 @@ function ManagedHeapFigure() {
                 textAlign: "center",
               }}
             >
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>LOH</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                LOH
+              </Typography>
               <Typography variant="caption" sx={{ display: "block", lineHeight: 1.2 }}>
                 Large Object Heap
               </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: "block", mt: 0.5 }}
+              >
                 ≥ 85,000 bytes*
               </Typography>
             </Box>
@@ -437,11 +482,17 @@ function ManagedHeapFigure() {
                 textAlign: "center",
               }}
             >
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>POH</Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                POH
+              </Typography>
               <Typography variant="caption" sx={{ display: "block", lineHeight: 1.2 }}>
                 Pinned Object Heap
               </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ display: "block", mt: 0.5 }}
+              >
                 Pinned allocations
               </Typography>
             </Box>
@@ -468,37 +519,37 @@ function ManagedHeapFigure() {
   );
 }
 
-function FigurePlaceholder({ number, title }: { number: number; title: string }) {
-  return (
-    <Box component="figure" sx={{ my: 3, mx: 0 }}>
-      <Box
-        sx={{
-          minHeight: 132,
-          border: "1px dashed",
-          borderColor: "divider",
-          borderRadius: 2,
-          bgcolor: "action.hover",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          p: 2,
-        }}
-      >
-        <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-          Figure {number} · Illustration to be added
-        </Typography>
-      </Box>
-      <Typography component="figcaption" variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-        Figure {number}. {title}.
-      </Typography>
-    </Box>
-  );
-}
+// function FigurePlaceholder({ number, title }: { number: number; title: string }) {
+//   return (
+//     <Box component="figure" sx={{ my: 3, mx: 0 }}>
+//       <Box
+//         sx={{
+//           minHeight: 132,
+//           border: "1px dashed",
+//           borderColor: "divider",
+//           borderRadius: 2,
+//           bgcolor: "action.hover",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: "center",
+//           p: 2,
+//         }}
+//       >
+//         <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+//           Figure {number} · Illustration to be added
+//         </Typography>
+//       </Box>
+//       <Typography component="figcaption" variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+//         Figure {number}. {title}.
+//       </Typography>
+//     </Box>
+//   );
+// }
 
 export default function MemoryInDotNet() {
   return (
     <ArticleLayout
-      title="Memory in .NET"
+      title="Memory in .NET — Overview"
       category=".NET"
       publishedAt={draftPublicationDate}
       summary="Where .NET data lives, what controls its lifetime, and which choices are actually yours."
@@ -553,8 +604,8 @@ Customer customer = new();    // 8-byte reference on x64; object usually on the 
         The local variable <code>buffer</code> occupies 8 bytes on the stack and holds a reference
         to an array in the SOH. The array's 100 bytes of element data, together with its metadata,
         are stored separately in the managed heap. The array belongs to the SOH because its total
-        size is below the LOH threshold. If we only need a small temporary buffer within the
-        current method, we can allocate those bytes directly on the stack instead:
+        size is below the LOH threshold. If we only need a small temporary buffer within the current
+        method, we can allocate those bytes directly on the stack instead:
       </Paragraph>
       <CodeExample
         code={`Span<byte> buffer = stackalloc byte[100]; // 100 contiguous bytes on the stack`}
@@ -562,20 +613,21 @@ Customer customer = new();    // 8-byte reference on x64; object usually on the 
       <Paragraph>
         This allocates 100 contiguous bytes on the stack without creating a managed array.
         <code> Span&lt;byte&gt;</code> describes that memory; it does not own a separate 100-byte
-        array. Unlike a newly created managed array, <code>stackalloc</code> memory is not guaranteed
-        to be zero-initialized. Stack-allocated data must not outlive its stack frame, and large
-        allocations can cause a stack overflow.
+        array. Unlike a newly created managed array, <code>stackalloc</code> memory is not
+        guaranteed to be zero-initialized. Stack-allocated data must not outlive its stack frame,
+        and large allocations can cause a stack overflow.
       </Paragraph>
       <Paragraph>
-        These examples illustrate a simplified memory model, not guaranteed stack slots. With
-        JIT optimizations enabled, local values may be held in CPU registers, removed entirely,
-        or, in some cases, reference-type heap allocations may be avoided through escape analysis.
+        These examples illustrate a simplified memory model, not guaranteed stack slots. With JIT
+        optimizations enabled, local values may be held in CPU registers, removed entirely, or, in
+        some cases, reference-type heap allocations may be avoided through escape analysis.
       </Paragraph>
       <Paragraph>
         Stack size depends on the runtime, operating system, and how a thread is created. On
         Windows, <code>EDITBIN /STACK</code> can change an executable's stack reservation. On Linux,
         launching a process with <code>ulimit -s</code> sets the main thread's stack limit and may
-        affect other threads depending on the native threading implementation. Starting with .NET 10,
+        affect other threads depending on the native threading implementation. Starting with .NET
+        10,
         <code> System.Threading.DefaultStackSize</code> in <code>runtimeconfig.json</code> can set
         the default for threads created by the runtime on either platform. The <code>Thread</code>{" "}
         constructor also offers a stack-size argument. These are specialized controls.
@@ -681,10 +733,10 @@ finally
 }`}
       />
       <Paragraph>
-        This example uses <code>Marshal.AllocHGlobal</code> to avoid C# unsafe pointer syntax.
-        The returned <code>IntPtr</code> is an address, not a safe handle: incorrect access or
-        failure to release the allocation can still cause serious problems. The GC does not free
-        this memory automatically. For new applications on modern .NET, <code>NativeMemory</code>
+        This example uses <code>Marshal.AllocHGlobal</code> to avoid C# unsafe pointer syntax. The
+        returned <code>IntPtr</code> is an address, not a safe handle: incorrect access or failure
+        to release the allocation can still cause serious problems. The GC does not free this memory
+        automatically. For new applications on modern .NET, <code>NativeMemory</code>
         is the preferred low-level allocator, although its pointer-based API requires an unsafe
         context.
       </Paragraph>
@@ -697,30 +749,127 @@ finally
         or cache level.
       </Paragraph>
 
-      <SectionHeading id="where-data-lives">8. Where Does the Data Actually Live?</SectionHeading>
+      <Divider sx={{ mt: 4, mb: 2 }} />
+      <SectionHeading id="where-data-lives">8. Putting It All Together</SectionHeading>
       <Paragraph>
-        These examples illustrate why values, variables, references, and objects must be
-        distinguished:
+        So the purpose of this article is to identify the different memory regions used by .NET
+        applications and learn to distinguish them in practice. Instead of thinking of variables and
+        arrays as simply being created somewhere in memory, we should understand where their data
+        actually lives.
       </Paragraph>
-      <CodeExample
-        code={`int number = 7;                    // Local value: stack/register/optimized away
-Customer customer = new();         // Local reference + managed object
-byte[] buffer = new byte[100_000]; // Local reference + LOH array`}
-      />
-      <FigurePlaceholder number={3} title="Values, References, and Actual Storage" />
       <Paragraph>
-        The type of a value alone does not determine its memory region. A value-type field inside a
-        heap object is stored as part of that object; a local variable may never occupy a stack slot
-        at all. What matters is the storage context and what the runtime can optimize.
+        Let's explore the different ways to allocate memory for the same purpose—for example, a
+        simple array.
+      </Paragraph>
+      <Paragraph>
+        <Box component="span" sx={{ fontWeight: 700, color: "primary.main" }}>
+          Option A:
+        </Box>
+        <br />
+        Traditionally, we create a byte array this way:
+      </Paragraph>
+      <CodeExample title="Managed array · SOH" code={`byte[] buffer = new byte[1024];`} />
+      <Paragraph>
+        <Box component="span" sx={{ fontWeight: 700, color: "primary.main" }}>
+          Option B:
+        </Box>
+        <br />
+        But this is not the only way to do that. Let's try to allocate bytes of this array on the
+        stack:
       </Paragraph>
 
-      <Divider sx={{ mt: 4, mb: 2 }} />
-      <SectionHeading id="conclusion">Conclusion</SectionHeading>
+      {/* <Subheading id="stack-buffer">A short-lived buffer: the stack</Subheading> */}
+      <CodeExample
+        title="Stack · 1,024 bytes"
+        code={`Span<byte> buffer = stackalloc byte[1024];`}
+      />
       <Paragraph>
-        The stack, managed heap, static storage, code memory, and native memory have different
-        strengths and limitations. Understanding where data can live—and who manages its
-        lifetime—helps us reduce unnecessary memory pressure and make better engineering decisions.
-        The goal is not to eliminate heap allocations, but to use memory deliberately.
+        This does not create a managed array, and the stack allocation is automatically discarded
+        when the method returns.
+      </Paragraph>
+
+      {/* <Subheading id="pinned-buffer">A stable address: the POH</Subheading> */}
+      <Paragraph>
+        <Box component="span" sx={{ fontWeight: 700, color: "primary.main" }}>
+          Option C:
+        </Box>
+        <br />
+        Another option is the POH. If a buffer must remain at a stable address, for example during
+        repeated native interop, it can be allocated as a pinned array in the POH. The reason to
+        choose the POH is pinning, not merely that the buffer will be reused for a long time.
+      </Paragraph>
+      <CodeExample
+        title="Pinned managed array · POH"
+        code={`byte[] buffer = GC.AllocateArray<byte>(1024, pinned: true);`}
+      />
+
+      {/* <Subheading id="pooled-buffer">Frequent reuse: a managed buffer pool</Subheading> */}
+      <Paragraph>
+        <Box component="span" sx={{ fontWeight: 700, color: "primary.main" }}>
+          Option D:
+        </Box>
+        <br />
+        When temporary buffers are repeatedly needed, an array pool is often more appropriate.
+        Renting and returning arrays can reduce new allocations and the resulting GC pressure.
+        Pooled arrays remain managed objects, usually in the SOH for this size; retained arrays may
+        eventually reach Gen 2, but the pool does not guarantee a particular generation.
+      </Paragraph>
+      <CodeExample
+        title="Reusable managed array · ArrayPool"
+        code={`using System.Buffers;
+
+byte[] rented = ArrayPool<byte>.Shared.Rent(1024);
+try
+{
+    Span<byte> buffer = rented.AsSpan(0, 1024);
+    buffer[0] = 42;
+}
+finally
+{
+    ArrayPool<byte>.Shared.Return(rented, clearArray: true);
+}`}
+      />
+      <Paragraph>
+        A rented array may be larger than requested and is not guaranteed to contain zeros. After
+        returning it, the caller must not access it again.
+      </Paragraph>
+
+      {/* <Subheading id="native-buffer">Manual control: native memory</Subheading> */}
+      <Paragraph>
+        <Box component="span" sx={{ fontWeight: 700, color: "primary.main" }}>
+          Option E:
+        </Box>
+        <br />
+        And finally, we can allocate 1,024 bytes outside the managed heap, as shown earlier with
+        <code> Marshal.AllocHGlobal</code>. This is useful for specific interop requirements, but is
+        not a general replacement for managed arrays: the caller owns the allocation and must
+        release it explicitly:
+      </Paragraph>
+      <CodeExample
+        title="Unmanaged Heap"
+        code={`
+IntPtr memory = Marshal.AllocHGlobal(1024);
+Marshal.WriteByte(memory, 0, 42);
+Marshal.FreeHGlobal(memory);`}
+      />
+      {/* <FigurePlaceholder number={3} title="Different Storage Strategies for a 1 KB Buffer" /> */}
+
+      <Paragraph>
+        None of these approaches is universally the best. However, understanding their differences
+        and knowing when to use each can help you build exceptionally performant and scalable .NET
+        applications.
+      </Paragraph>
+      <Paragraph>
+        This knowledge allows you to push .NET beyond its default capabilities—and, in certain
+        scenarios, outperform solutions built with Java, Node.js, Go, Rust, and other popular
+        technologies. The key is to make informed engineering decisions and validate their results
+        against real-world workloads rather than assumptions.
+      </Paragraph>
+      <Paragraph>
+        For a deeper understanding of the memory management mechanisms introduced in this overview,
+        I invite you to explore my other articles:
+        <br />
+        ...
       </Paragraph>
     </ArticleLayout>
   );
