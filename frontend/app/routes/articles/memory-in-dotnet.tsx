@@ -571,66 +571,99 @@ export default function MemoryInDotNet() {
       <MemoryLayoutFigure />
       <Paragraph>
         The diagram illustrates a process with a single thread. Each additional thread has its own
-        stack, while the managed heap, static storage, and executable code belong to the process
-        rather than to any individual thread. CPU registers and caches are shown separately because
-        they are hardware resources, not regions of the process's virtual address space.
+        stack, while the managed heap, static storage, and executable code belong to the process and
+        are shared by all its threads. CPU registers and caches are shown separately because they
+        are hardware resources, not regions of the process's virtual address space.
       </Paragraph>
 
       <SectionHeading id="thread-stack">2. Thread Stack</SectionHeading>
       <Paragraph>
-        Each thread has its own stack. It tracks nested method calls and may contain local values,
-        references, return addresses, and other execution state. Like the call stack in C and C++,
-        its frames follow the flow of method calls.
+        Let's start with the thread stack and one of the fundamental features of .NET: the
+        distinction between value types and reference types. Value types can be defined using the
+        <code>struct</code> keyword, while reference types can be defined using <code>class</code>.
+        It would be interesting to represent the same data using both types and see how and where
+        they are stored in memory. Let's define a simple order using both approaches:
       </Paragraph>
       <CodeExample
-        code={`int number = 7;               // 4-byte value
-double factor = 1.5;          // 8-byte value
-Customer customer = new();    // 8-byte reference on x64; object usually on the heap`}
+        code={`struct OrderStruct {
+    public int OrderId;
+    public decimal Price;
+}
+
+class OrderClass {
+    public int OrderId;
+    public decimal Price;
+}`}
       />
       <Paragraph>
-        In a simplified x64 stack-frame model, <code>number</code> occupies 4 bytes,
-        <code> factor</code> occupies 8 bytes, and <code>customer</code> holds an 8-byte reference —
-        all within the thread stack. The <code>Customer</code> object's data, however, resides
-        separately, typically in the Small Object Heap (SOH).
+        It is worth mentioning that most primitive types in .NET, including int, byte, double, and
+        many others, are defined as structs. When declared as local variables, such types store
+        their data directly on the stack, unlike reference types.
       </Paragraph>
       <Paragraph>
-        Arrays make this distinction even clearer. Consider a small byte array with 100 elements.
-        Besides its element data, the array object contains header and length information:
+        Let's look at a simple example of declaring local variables using both our custom types and
+        some primitive types:
       </Paragraph>
       <CodeExample
-        code={`byte[] buffer = new byte[100]; // x64: 8-byte local reference + SOH array`}
+        code={`int number = 7;
+decimal price = 100.01m;
+OrderClass orderClass = new OrderClass() { OrderId = 1, Price = 10.50m };
+OrderStruct orderStruct = new OrderStruct() { OrderId = 2, Price = 4.60m };`}
       />
-      <Paragraph>
-        The local variable <code>buffer</code> occupies 8 bytes on the stack and holds a reference
-        to an array in the SOH. The array's 100 bytes of element data, together with its metadata,
-        are stored separately in the managed heap. The array belongs to the SOH because its total
-        size is below the LOH threshold. If we only need a small temporary buffer within the current
-        method, we can allocate those bytes directly on the stack instead:
-      </Paragraph>
+      <Paragraph>Now let's see how these variables are arranged in memory:</Paragraph>
       <CodeExample
         code={`Span<byte> buffer = stackalloc byte[100]; // 100 contiguous bytes on the stack`}
       />
       <Paragraph>
-        This allocates 100 contiguous bytes on the stack without creating a managed array.
-        <code> Span&lt;byte&gt;</code> describes that memory; it does not own a separate 100-byte
-        array. Unlike a newly created managed array, <code>stackalloc</code> memory is not
-        guaranteed to be zero-initialized. Stack-allocated data must not outlive its stack frame,
-        and large allocations can cause a stack overflow.
+        With the primitive value types and our OrderStruct, everything is straightforward. Their
+        bytes are simply laid out on the stack, one after another, much like in C and C++.
       </Paragraph>
       <Paragraph>
-        These examples illustrate a simplified memory model, not guaranteed stack slots. With JIT
-        optimizations enabled, local values may be held in CPU registers, removed entirely, or, in
-        some cases, reference-type heap allocations may be avoided through escape analysis.
+        But what I would like to draw particular attention to is the creation of our OrderClass
+        instance:
+        <br />
+        Creating an instance of a reference type involves two separate entities in memory:
+      </Paragraph>
+
+      <Box component="ul" sx={{ pl: 4, my: 1.5 }}>
+        <Typography component="li" variant="body1">
+          The object itself.
+        </Typography>
+        <Typography component="li" variant="body1">
+          A value-like reference to that object.
+        </Typography>
+      </Box>
+
+      <Paragraph>
+        We'll explore this in more detail in the Managed Heap section. For now, let's focus on the
+        fact that creating a reference-type instance in our example also allocates bytes on the
+        stack to store the reference.
+      </Paragraph>
+
+      <Paragraph>
+        The reference itself is pointer-sized — 4 bytes in a 32-bit process or 8 bytes in a 64-bit
+        process — since it stores the memory address of the object.
+      </Paragraph>
+
+      <Paragraph>
+        So far, we've covered the most common ways data is stored on the stack. However, there's
+        another, less commonly used technique that can significantly improve performance in certain
+        scenarios: allocating an array on the stack instead of the managed heap.
+      </Paragraph>
+      <CodeExample code={`Span<byte> buffer = stackalloc byte[1024];`} />
+      <Paragraph>
+        As we'll see later, the performance improvement in this case can come from reducing the
+        workload of the Garbage Collector, since it doesn't manage memory allocated on the stack. To
+        summarize this section on the Thread Stack, we can draw the following conclusion:
       </Paragraph>
       <Paragraph>
-        Stack size depends on the runtime, operating system, and how a thread is created. On
-        Windows, <code>EDITBIN /STACK</code> can change an executable's stack reservation. On Linux,
-        launching a process with <code>ulimit -s</code> sets the main thread's stack limit and may
-        affect other threads depending on the native threading implementation. Starting with .NET
-        10,
-        <code> System.Threading.DefaultStackSize</code> in <code>runtimeconfig.json</code> can set
-        the default for threads created by the runtime on either platform. The <code>Thread</code>{" "}
-        constructor also offers a stack-size argument. These are specialized controls.
+        In most cases, the stack is the fastest and therefore the preferred memory region for
+        storing local variables. This is why Microsoft designed most primitive types in .NET as
+        structs. Knowing how to keep data on the stack rather than allocate it on the managed heap
+        is one of the techniques experienced .NET engineers use to build high-performance and,
+        consequently, scalable applications. Unfortunately, not everything can be placed on the
+        stack. So let's move on to the next memory region, where most of our data lives: the Managed
+        Heap.
       </Paragraph>
 
       <SectionHeading id="managed-heap">3. Managed Heap</SectionHeading>

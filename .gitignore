@@ -45,6 +45,7 @@ appsettings.Local.json
 /frontend/node_modules/
 /frontend/dist/
 /frontend/.vite/
+/frontend/build/
 
 # Logs
 /frontend/npm-debug.log*
