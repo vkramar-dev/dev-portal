@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1580" height="1000" viewBox="0 0 1580 1000" role="img" aria-labelledby="title desc">
+<title id="title">Thread stack and managed heap layout of local variables in .NET</title>
+<desc id="desc">An illustrative x64 diagram with precisely sized 8-byte slots. The stack contains int number, decimal price, an eight-byte reference to OrderClass, and a 24-byte OrderStruct. The managed heap contains the forty-byte OrderClass object. Blue denotes value data, purple denotes reference data, and crosshatching denotes padding.</desc>
+<defs>
+<pattern id="padBlue" patternUnits="userSpaceOnUse" width="12" height="12">
+<rect width="12" height="12" fill="#1c3c4f"/>
+<path d="M -6 6 L 6 -6 M 0 12 L 12 0 M 6 18 L 18 6 M -6 6 L 6 18 M 0 0 L 12 12 M 6 -6 L 18 6" fill="none" stroke="#89b9ca" stroke-width="1.2" opacity="0.65"/>
+</pattern>
+<pattern id="padPurple" patternUnits="userSpaceOnUse" width="12" height="12">
+<rect width="12" height="12" fill="#332b43"/>
+<path d="M -6 6 L 6 -6 M 0 12 L 12 0 M 6 18 L 18 6 M -6 6 L 6 18 M 0 0 L 12 12 M 6 -6 L 18 6" fill="none" stroke="#c3a6d8" stroke-width="1.2" opacity="0.65"/>
+</pattern>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8.8" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#c399e3"/></marker>
+</defs>
+<rect x="0" y="0" width="1580" height="1000" fill="#131b22" stroke="#131b22" stroke-width="0" rx="0" />
+<text x="475.0" y="122" text-anchor="middle" font-size="34" font-weight="700" fill="#e8f3f7" >Thread Stack</text>
+<text x="475.0" y="153" text-anchor="middle" font-size="22" font-weight="400" fill="#b6d0db" >(local variables)</text>
+<text x="1105.0" y="122" text-anchor="middle" font-size="34" font-weight="700" fill="#e8f3f7" >Managed Heap (SOH)</text>
+<rect x="245.0" y="185" width="230.0" height="52" fill="#1c3c4f" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="360.0" y="207" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >number = 7</text>
+<text x="360.0" y="228" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >int, 4 B</text>
+<rect x="475.0" y="185" width="230.0" height="52" fill="url(#padBlue)" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="590.0" y="207" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >padding</text>
+<text x="590.0" y="228" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >4 B</text>
+<rect x="245" y="237" width="460" height="104" fill="#1c3c4f" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="475.0" y="284.0" text-anchor="middle" font-size="26" font-weight="650" fill="#e8f3f7" >price = 100.01m</text>
+<text x="475.0" y="318.0" text-anchor="middle" font-size="22" font-weight="400" fill="#b6d0db" >decimal, 16 B</text>
+<rect x="245" y="341" width="460" height="52" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="475.0" y="363" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >orderClass reference</text>
+<text x="475.0" y="384" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >8 B</text>
+<rect x="245.0" y="393" width="230.0" height="52" fill="#1c3c4f" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="360.0" y="415" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >OrderId = 2</text>
+<text x="360.0" y="436" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >int, 4 B</text>
+<rect x="475.0" y="393" width="230.0" height="52" fill="url(#padBlue)" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="590.0" y="415" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >padding</text>
+<text x="590.0" y="436" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >4 B</text>
+<rect x="245" y="445" width="460" height="104" fill="#1c3c4f" stroke="#719db0" stroke-width="1.5" rx="0" />
+<text x="475.0" y="492.0" text-anchor="middle" font-size="26" font-weight="650" fill="#e8f3f7" >Price = 4.60m</text>
+<text x="475.0" y="526.0" text-anchor="middle" font-size="22" font-weight="400" fill="#b6d0db" >decimal, 16 B</text>
+<rect x="875.0" y="185" width="230.0" height="52" fill="url(#padPurple)" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="990.0" y="207" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >padding</text>
+<text x="990.0" y="228" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >4 B</text>
+<rect x="1105.0" y="185" width="230.0" height="52" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="1220.0" y="207" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >ObjHeader</text>
+<text x="1220.0" y="228" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >4 B</text>
+<rect x="875" y="237" width="460" height="52" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="1105.0" y="259" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >MethodTable pointer</text>
+<text x="1105.0" y="280" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >8 B</text>
+<rect x="875.0" y="289" width="230.0" height="52" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="990.0" y="311" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >OrderId = 1</text>
+<text x="990.0" y="332" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >int, 4 B</text>
+<rect x="1105.0" y="289" width="230.0" height="52" fill="url(#padPurple)" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="1220.0" y="311" text-anchor="middle" font-size="22" font-weight="650" fill="#e8f3f7" >padding</text>
+<text x="1220.0" y="332" text-anchor="middle" font-size="19" font-weight="400" fill="#b6d0db" >4 B</text>
+<rect x="875" y="341" width="460" height="104" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="0" />
+<text x="1105.0" y="388.0" text-anchor="middle" font-size="26" font-weight="650" fill="#e8f3f7" >Price = 10.50m</text>
+<text x="1105.0" y="422.0" text-anchor="middle" font-size="22" font-weight="400" fill="#b6d0db" >decimal, 16 B</text>
+<rect x="245" y="549" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="475.0" y="584" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="245" y="601" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="475.0" y="636" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="245" y="653" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="475.0" y="688" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="245" y="705" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="475.0" y="740" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="445" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="480" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="497" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="532" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="549" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="584" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="601" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="636" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="653" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="688" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="875" y="705" width="460" height="52" fill="#1c2c32" stroke="#628a93" stroke-width="1.35" rx="0" />
+<text x="1105.0" y="740" text-anchor="middle" font-size="23" font-weight="650" fill="#b6d0db" >...</text>
+<rect x="245" y="185" width="460" height="572" fill="none" stroke="#719db0" stroke-width="2" rx="0" />
+<rect x="875" y="185" width="460" height="572" fill="none" stroke="#719db0" stroke-width="2" rx="0" />
+<rect x="245" y="341" width="460" height="52" fill="none" stroke="#b78cda" stroke-width="3.8" rx="0" />
+<rect x="245" y="393" width="460" height="156" fill="none" stroke="#66b9e0" stroke-width="3.8" rx="0" />
+<rect x="875" y="185" width="460" height="260" fill="none" stroke="#b78cda" stroke-width="3.8" rx="0" />
+<path d="M 226 393 C 206 393, 206 406, 206 421 L 206 449.0 C 206 464.0, 198 465.0, 190 471.0 C 198 477.0, 206 478.0, 206 493.0 L 206 521 C 206 536, 206 549, 226 549" fill="none" stroke="#66b9e0" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="22" y="435" width="156" height="70" fill="#1e3440" stroke="#66b9e0" stroke-width="1.5" rx="5" />
+<text x="100.0" y="466" text-anchor="middle" font-size="24" font-weight="650" fill="#e8f3f7" >OrderStruct</text>
+<text x="100.0" y="494" text-anchor="middle" font-size="24" font-weight="650" fill="#e8f3f7" >24 B</text>
+<line x1="178" y1="470" x2="190" y2="470" stroke="#66b9e0" stroke-width="2" />
+<path d="M 1340 185 C 1360 185, 1360 198, 1360 213 L 1360 293.0 C 1360 308.0, 1368 309.0, 1376 315.0 C 1368 321.0, 1360 322.0, 1360 337.0 L 1360 417 C 1360 432, 1360 445, 1340 445" fill="none" stroke="#b78cda" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1394" y="280.0" width="160" height="70" fill="#332b43" stroke="#b78cda" stroke-width="1.5" rx="5" />
+<text x="1474.0" y="311.0" text-anchor="middle" font-size="24" font-weight="650" fill="#e8f3f7" >OrderClass</text>
+<text x="1474.0" y="339.0" text-anchor="middle" font-size="24" font-weight="650" fill="#e8f3f7" >40 B</text>
+<line x1="1376" y1="315.0" x2="1394" y2="315.0" stroke="#b78cda" stroke-width="2" />
+<path d="M 707 367.0 C 786 367.0, 787 263.0, 863 263.0" fill="none" stroke="#c399e3" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="245" y="788" width="460" height="68" fill="#202f37" stroke="#638b98" stroke-width="1.25" rx="8" />
+<text x="475.0" y="815" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >Next local allocations use available stack space</text>
+<text x="475.0" y="839" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >(conceptual stack-frame view).</text>
+<rect x="875" y="788" width="460" height="68" fill="#202f37" stroke="#638b98" stroke-width="1.25" rx="8" />
+<text x="1105.0" y="815" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >New managed objects use available</text>
+<text x="1105.0" y="839" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >SOH space.</text>
+<rect x="245" y="874" width="1090" height="74" fill="#202f37" stroke="#638b98" stroke-width="1.25" rx="8" />
+<text x="790.0" y="901" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >Illustrative x64 layout with 8-byte grid cells.</text>
+<text x="790.0" y="925" text-anchor="middle" font-size="19" font-weight="400" fill="#e8f3f7" >Exact local-variable offsets and padding depend on the JIT and platform.</text>
+</svg>

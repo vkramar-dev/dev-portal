@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import ArticleLayout from "../../components/ArticleLayout";
 
@@ -503,6 +503,10 @@ function ManagedHeapFigure() {
             sx={{ display: "block", mt: 1.25, fontSize: "0.68rem", textAlign: "center" }}
           >
             * Default LOH threshold; the size includes object overhead.
+            <br />
+            <br />* A small clarification: With Server GC enabled, .NET typically creates one
+            managed heap per logical CPU available to the process. As you might have guessed,
+            garbage collection can then run in parallel, with a dedicated GC thread for each heap.
           </Typography>
         </Box>
       </Box>
@@ -513,7 +517,7 @@ function ManagedHeapFigure() {
         color="text.secondary"
         sx={{ mt: 1, lineHeight: 1.6 }}
       >
-        Figure 2. Inside the Managed Heap: SOH, LOH, and POH (conceptual, not to scale).
+        Figure 3. Inside the Managed Heap: SOH, LOH, and POH (conceptual, not to scale).
       </Typography>
     </Box>
   );
@@ -547,6 +551,7 @@ function ManagedHeapFigure() {
 // }
 
 export default function MemoryInDotNet() {
+  const theme = useTheme();
   return (
     <ArticleLayout
       title="Memory in .NET — Overview"
@@ -611,12 +616,30 @@ OrderClass orderClass = new OrderClass() { OrderId = 1, Price = 10.50m };
 OrderStruct orderStruct = new OrderStruct() { OrderId = 2, Price = 4.60m };`}
       />
       <Paragraph>Now let's see how these variables are arranged in memory:</Paragraph>
-      <CodeExample
-        code={`Span<byte> buffer = stackalloc byte[100]; // 100 contiguous bytes on the stack`}
+      <Box
+        component="img"
+        src={
+          theme.palette.mode === "dark"
+            ? "/images/articles/memory-in-dotnet/stack_memory_layout_dark.svg"
+            : "/images/articles/memory-in-dotnet/stack_memory_layout_light.svg"
+        }
+        alt="Thread stack and managed heap memory layout in .NET"
+        sx={{ width: "100%", height: "auto", display: "block" }}
       />
+      <Typography
+        id="memory-state"
+        component="figcaption"
+        variant="body2"
+        color="text.secondary"
+        sx={{ mt: 1, lineHeight: 1.6 }}
+      >
+        Figure 2. Memory state.
+      </Typography>
+      <br />
       <Paragraph>
         With the primitive value types and our OrderStruct, everything is straightforward. Their
-        bytes are simply laid out on the stack, one after another, much like in C and C++.
+        data is stored directly on the stack, much like in C and C++, with possible gaps due to
+        memory alignment.
       </Paragraph>
       <Paragraph>
         But what I would like to draw particular attention to is the creation of our OrderClass
@@ -668,27 +691,48 @@ OrderStruct orderStruct = new OrderStruct() { OrderId = 2, Price = 4.60m };`}
 
       <SectionHeading id="managed-heap">3. Managed Heap</SectionHeading>
       <Paragraph>
-        The managed heap is the usual home for managed objects. The CLR tracks their reachability
-        and reclaims unreachable objects through garbage collection. The heap is commonly viewed as
-        three areas: SOH, LOH, and POH.
+        In typical .NET applications, most objects we create are instances of reference types rather
+        than value types. Although we've established in the previous section that stack memory is
+        generally preferable to heap allocations, we cannot always store our data on the stack.
+        Sometimes the required lifetime of our data or the need for reference semantics makes heap
+        allocation necessary.
       </Paragraph>
-      <ManagedHeapFigure />
 
+      <Paragraph>
+        The Managed Heap is not a single continuous region of memory. Instead, it consists of three
+        distinct areas:
+      </Paragraph>
+
+      <Box component="ul" sx={{ pl: 4, mt: 0, mb: 3 }}>
+        <Typography component="li" variant="body1">
+          Small Object Heap (SOH)
+        </Typography>
+        <Typography component="li" variant="body1">
+          Large Object Heap (LOH)
+        </Typography>
+        <Typography component="li" variant="body1">
+          Pinned Object Heap (POH)
+        </Typography>
+      </Box>
+      <ManagedHeapFigure />
       <Subheading id="soh">3.1 Small Object Heap (SOH)</Subheading>
       <Paragraph>
-        The SOH holds ordinary managed objects below the large-object threshold. Its generations are
-        Gen 0, Gen 1, and Gen 2. New small objects generally start in Gen 0; surviving a collection
-        may promote them to an older generation.
+        Of the three managed heap areas, the SOH is typically the most heavily used, since
+        applications generally create far more small objects than large or pinned ones.
+      </Paragraph>
+      <Paragraph>
+        The SOH is also more complex than the other two areas. It is logically divided into three
+        generations: Gen 0, Gen 1, and Gen 2. New small objects are generally allocated in Gen 0. If
+        they survive garbage collection, they may eventually be promoted to Gen 1 and then Gen 2.
       </Paragraph>
       <CodeExample
-        code={`Customer customer = new();
+        code={`OrderClass order = new();
 int[] numbers = new int[100];`}
       />
       <Paragraph>
-        Generational collection is designed around a common pattern: many objects become unreachable
-        quickly. Ideally, most temporary objects die young. Frequent promotion of temporary data
-        into Gen 2 may increase collection costs and is worth investigating, but promotion alone
-        does not prove a design problem.
+        We'll explore how the Garbage Collector manages these generations in more detail in our
+        separate article on .NET Garbage Collection. For now, it's enough to understand that the SOH
+        is where most of our managed objects are allocated.
       </Paragraph>
 
       <Subheading id="loh">3.2 Large Object Heap (LOH)</Subheading>
@@ -713,7 +757,10 @@ int[] numbers = new int[100];`}
         code. Not every pinned object is placed in the POH.
       </Paragraph>
       <CodeExample code={`byte[] buffer = GC.AllocateArray<byte>(1024, pinned: true);`} />
-
+      <Paragraph>
+        It is worth mentioning that the POH is rarely, if ever, used in typical .NET applications.
+        In many projects, you are unlikely to find even a single explicit allocation to it.
+      </Paragraph>
       <SectionHeading id="static-storage">4. Static Storage</SectionHeading>
       <Paragraph>
         A static field belongs to a type rather than to an instance. Static fields are not kept on a
