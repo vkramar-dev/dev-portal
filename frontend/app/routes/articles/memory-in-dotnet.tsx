@@ -1,6 +1,7 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import ArticleLayout from "../../components/ArticleLayout";
+import type { TocItem } from "../../components/publications/PublicationBody";
 
 // Draft article: update the publication date when the text is ready to go live.
 const draftPublicationDate = "2026-10-30";
@@ -58,6 +59,21 @@ const references = [
     url: "https://learn.microsoft.com/en-us/dotnet/core/runtime-config/threading",
   },
 ];
+
+const toc = [
+  { id: "memory-overview", label: "1. Memory Overview" },
+  { id: "thread-stack", label: "2. Thread Stack" },
+  { id: "managed-heap", label: "3. Managed Heap" },
+  { id: "soh", label: "3.1 Small Object Heap", level: 3 },
+  { id: "loh", label: "3.2 Large Object Heap", level: 3 },
+  { id: "poh", label: "3.3 Pinned Object Heap", level: 3 },
+  { id: "static-storage", label: "4. Static Storage" },
+  { id: "code-memory", label: "5. Code Memory" },
+  { id: "native-memory", label: "6. Native and Unmanaged Memory" },
+  { id: "cpu-storage", label: "7. CPU Registers and Caches" },
+  { id: "where-data-lives", label: "8. Putting It All Together" },
+  { id: "references", label: "References" },
+] satisfies TocItem[];
 
 const contentSx = { mb: 2.5, lineHeight: 1.75 } as const;
 const headingSx = { mt: 5, mb: 2, scrollMarginTop: "96px" } as const;
@@ -559,6 +575,7 @@ export default function MemoryInDotNet() {
       publishedAt={draftPublicationDate}
       summary="Where .NET data lives, what controls its lifetime, and which choices are actually yours."
       references={references}
+      toc={toc}
     >
       <Paragraph>
         Every engineer building professional .NET applications should understand where data is

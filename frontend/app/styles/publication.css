@@ -11,7 +11,7 @@
 .pub-meta{display:flex;align-items:center;gap:11px;color:var(--pind-muted);font-size:11px;flex-wrap:wrap}
 .pub-meta i{width:3px;height:3px;border-radius:50%;background:var(--pind-muted)}
 .pub-share{color:var(--pind-accent);margin-left:auto}
-.pub-grid{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:32px;padding-top:25px}
+.pub-grid{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:28px;padding-top:25px}
 .pub-content{max-width:780px;min-width:0}
 .pub-content section{scroll-margin-top:25px}
 .pub-content h2{font:400 25px/1.23 Georgia,"Times New Roman",serif;letter-spacing:-.038em;margin:31px 0 13px;color:var(--pind-ink)}
@@ -22,10 +22,13 @@
 .pub-content p code,.pub-table code{font:500 .9em/1.4 Consolas, "Liberation Mono",monospace;background:color-mix(in srgb,var(--pind-accent) 8%,transparent);padding:2px 4px;border-radius:3px;white-space:nowrap}
 .pub-content em{color:var(--pind-ink)}
 .pub-sidebar{min-width:0}
-.toc{position:sticky;top:20px;border-left:1px solid var(--pind-line);padding:5px 0 8px 14px}
+.toc{position:sticky;top:20px;border-left:1px solid var(--pind-line);padding:5px 0 8px 14px;max-height:calc(100vh - 40px);overflow-y:auto;scrollbar-width:thin}
 .toc-label{font-size:10px;letter-spacing:.09em;font-weight:800;color:var(--pind-copper);margin:0 0 13px}
-.toc a{display:block;text-decoration:none;color:var(--pind-muted);font-size:12px;line-height:1.4;margin:0 0 14px;overflow-wrap:anywhere}
+.toc a{position:relative;display:block;text-decoration:none;color:var(--pind-muted);font-size:12px;line-height:1.4;padding:5px 0;margin:0 0 5px;overflow-wrap:anywhere;transition:color .15s ease}
 .toc a:hover{color:var(--pind-accent)}
+.toc a.toc-link--subsection{padding-left:12px;font-size:11px}
+.toc a.toc-link--active{color:var(--pind-accent);font-weight:700}
+.toc a.toc-link--active::before{content:"";position:absolute;top:2px;bottom:2px;left:-15px;width:2px;background:var(--pind-accent);border-radius:2px}
 .toc-bottom{border-top:1px solid var(--pind-line);padding-top:14px;font-size:11px;line-height:1.5;color:var(--pind-ink);margin-top:19px}
 .toc-bottom span{color:var(--pind-muted);font-size:10px}
 .code-panel{border:1px solid var(--pind-line);border-radius:5px;overflow:hidden;margin:19px 0 20px;background:color-mix(in srgb,var(--pind-surface) 92%,var(--pind-accent) 8%)}
