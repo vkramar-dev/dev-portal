@@ -67,6 +67,7 @@ const toc = [
   { id: "soh", label: "3.1 Small Object Heap", level: 3 },
   { id: "loh", label: "3.2 Large Object Heap", level: 3 },
   { id: "poh", label: "3.3 Pinned Object Heap", level: 3 },
+  { id: "managed-heap-summary", label: "3.4 Performance Considerations", level: 3 },
   { id: "static-storage", label: "4. Static Storage" },
   { id: "code-memory", label: "5. Code Memory" },
   { id: "native-memory", label: "6. Native and Unmanaged Memory" },
@@ -778,6 +779,42 @@ int[] numbers = new int[100];`}
         It is worth mentioning that the POH is rarely, if ever, used in typical .NET applications.
         In many projects, you are unlikely to find even a single explicit allocation to it.
       </Paragraph>
+
+      <Subheading id="managed-heap-summary">3.4 Performance Considerations</Subheading>
+      <Paragraph>
+        Memory allocation on the managed heap is very fast, often approaching the speed of stack
+        allocation. This is especially efficient for short-lived objects that are collected in Gen
+        0. It might seem that we can use the managed heap freely without worrying too much about
+        performance. However, I want to draw your attention to another cost: the memory overhead of
+        reference types.
+      </Paragraph>
+      <Paragraph>
+        As we saw in the earlier OrderClass example, each object requires an additional 16 bytes on
+        x64 for its object header and method table pointer. Each reference also occupies 8 bytes.
+        Now consider an array of 1,000 OrderClass instances:
+      </Paragraph>
+      <CodeExample
+        code={`OrderClass[] orders = new OrderClass[1000];
+
+for (int i = 0; i < orders.Length; i++)
+    orders[i] = new OrderClass();`}
+      />
+      <Paragraph>
+        The array contains 1,000 references (8,000 bytes), while the object headers require another
+        16,000 bytes. That is approximately 24 KB of additional memory, excluding the actual data
+        and the array's own overhead. Not a huge amount on its own.
+      </Paragraph>
+      <Paragraph>
+        However, on a web server processing thousands of requests, repeated allocations like these
+        can generate considerable memory overhead and additional work for the garbage collector.
+        Depending on the workload, this can negatively affect the application's performance and
+        scalability.
+      </Paragraph>
+      <Paragraph>
+        Such costs are worth considering when designing high-load systems. In future articles, we
+        will explore how to identify these problems and optimize memory usage.
+      </Paragraph>
+
       <SectionHeading id="static-storage">4. Static Storage</SectionHeading>
       <Paragraph>
         A static field belongs to a type rather than to an instance. Static fields are not kept on a
