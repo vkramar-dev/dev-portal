@@ -13,7 +13,7 @@ export const publicationPreviews = [
     title: "Understanding .NET Garbage Collection",
     url: "/articles/dotnet-garbage-collection",
     category: ".NET · Runtime",
-    summary: "Diagrams, code, a synthetic chart and a methodology example.",
+    summary: "Allocations, generations, and object survival.",
   },
   {
     section: "notes",
