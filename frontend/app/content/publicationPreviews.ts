@@ -2,11 +2,11 @@
 export const publicationPreviews = [
   {
     section: "articles",
-    title: "Memory in .NET",
+    title: "Memory in .NET — Overview",
     url: "/articles/memory-in-dotnet",
     category: ".NET · Runtime",
     summary:
-      "An overview of thread stacks, managed heaps, static storage, native memory, and executable code.",
+      "Where .NET data lives, what controls its lifetime, and which choices are actually yours.",
   },
   {
     section: "articles",
