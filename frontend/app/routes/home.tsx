@@ -56,15 +56,15 @@ export default function Home() {
   return (
     <div className="site-shell home-page">
       <section className="home-intro" aria-labelledby="home-title">
-        <h1 id="home-title">Exploring .NET Engineering</h1>
+        <h1 id="home-title">.NET Engineering in Detail</h1>
         <p>DRIVEN BY CODE</p>
       </section>
 
       <section className="home-description" aria-label="About Programming in Depth">
         <p>
-          Programming in Depth explores the engineering behind real-world .NET applications — from
-          C# and CLR internals to ASP.NET Core, Entity Framework, SQL Server, and modern JavaScript
-          frontends.
+          The .NET platform offers the tools to build exceptional software. Understanding its
+          internals, capabilities, and limitations is what allows us to turn that potential into
+          real engineering advantages.
         </p>
         <p>
           Technical investigations, experiments, and discussions about architecture, performance,
@@ -83,9 +83,7 @@ export default function Home() {
             <article className="home-research-item" key={article.url}>
               <ResearchIcon />
               <div className="home-research-copy">
-                <div className="home-research-category">
-                  {article.category}
-                </div>
+                <div className="home-research-category">{article.category}</div>
                 <h3>
                   <Link to={article.url}>{article.title}</Link>
                 </h3>

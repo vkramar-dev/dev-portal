@@ -217,7 +217,7 @@ export default function DotNetGarbageCollection() {
       publication={publication}
       toc={toc}
       references={references}
-      related={[{ title: "Memory in .NET", to: "/articles/memory-in-dotnet" }]}
+      related={[{ title: "Memory in .NET — Overview", to: "/articles/memory-in-dotnet" }]}
     >
       <PublicationSection id="managed-memory" title="Managed Memory and the GC">
         <p>

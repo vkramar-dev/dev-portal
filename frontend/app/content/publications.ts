@@ -47,7 +47,7 @@ export const publications = {
   "dotnet-strings": {
     kind: "note",
     url: "/notes/dotnet-strings",
-    title: "How .NET Stores Strings",
+    title: ".NET Strings & the Two-Byte Tax",
     category: ".NET · Runtime Internals",
     summary: "UTF-16 representation, string immutability, and the details behind .NET strings.",
     description:
