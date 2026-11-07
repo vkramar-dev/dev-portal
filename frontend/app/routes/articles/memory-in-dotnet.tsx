@@ -77,8 +77,8 @@ const toc = [
 ] satisfies TocItem[];
 
 const contentSx = { mb: 2.5, lineHeight: 1.75 } as const;
-const headingSx = { mt: 5, mb: 2, scrollMarginTop: "96px" } as const;
-const subheadingSx = { mt: 3.5, mb: 1.5, scrollMarginTop: "96px" } as const;
+const headingSx = { mt: 5, mb: 2, scrollMarginTop: "25px" } as const;
+const subheadingSx = { mt: 3.5, mb: 1.5, scrollMarginTop: "25px" } as const;
 
 function SectionHeading({ id, children }: { id: string; children: ReactNode }) {
   return (
