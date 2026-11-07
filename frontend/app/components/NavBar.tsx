@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { publishedArticles, siteSections } from "../content/siteSections";
-import { publicationPreviews } from "../content/publicationPreviews";
+import { siteSections } from "../content/siteSections";
+import { visiblePublications } from "../content/publications";
 
 function SearchIcon() {
   return (
@@ -56,17 +56,11 @@ const searchable = [
     url: `/${item.slug}`,
     kind: "Section",
   })),
-  ...publishedArticles.map((item) => ({
+  ...visiblePublications().map((item) => ({
     title: item.title,
     description: item.summary,
     url: item.url,
-    kind: "Article",
-  })),
-  ...publicationPreviews.map((item) => ({
-    title: item.title,
-    description: item.summary,
-    url: item.url,
-    kind: "Design preview",
+    kind: item.kind === "article" ? "Article" : "Note",
   })),
 ];
 
@@ -198,7 +192,7 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
                 <p className="search-empty">No matching sections or publications.</p>
               )}
               <p className="search-hint">
-                Search currently covers sections, publication titles, and layout previews (not full article text).
+                Search covers sections, publication titles and summaries (not full article text).
               </p>
             </div>
           )}

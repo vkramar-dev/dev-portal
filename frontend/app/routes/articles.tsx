@@ -8,5 +8,5 @@ export function meta() {
 }
 
 export default function ArticlesPage() {
-  return <PublicationCatalog section="articles" title="Articles" />;
+  return <PublicationCatalog section="article" title="Articles" />;
 }

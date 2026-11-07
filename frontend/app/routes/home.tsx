@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { publishedArticles } from "../content/siteSections";
+import { visiblePublications } from "../content/publications";
 
 const topics = [
   ".NET Runtime",
@@ -49,8 +49,8 @@ function ResearchIcon() {
 }
 
 export default function Home() {
-  const latestResearch = [...publishedArticles]
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+  const latestResearch = visiblePublications("article")
+    .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""))
     .slice(0, 3);
 
   return (
@@ -84,7 +84,7 @@ export default function Home() {
               <ResearchIcon />
               <div className="home-research-copy">
                 <div className="home-research-category">
-                  {article.category} <span aria-hidden="true">·</span> {article.topic}
+                  {article.category}
                 </div>
                 <h3>
                   <Link to={article.url}>{article.title}</Link>

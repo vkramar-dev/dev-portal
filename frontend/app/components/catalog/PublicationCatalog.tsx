@@ -1,16 +1,12 @@
 import { useId, useMemo, useState } from "react";
 import { Link } from "react-router";
-import {
-  catalogEntries,
-  type CatalogEntry,
-  type PublicationCatalogSection,
-} from "../../content/publicationCatalog";
+import { visiblePublications, type Publication, type PublicationKind } from "../../content/publications";
 
 export type CatalogDensity = "normal" | "compact";
 export type CatalogSortOrder = "newest" | "oldest";
 
 interface PublicationCatalogProps {
-  section: PublicationCatalogSection;
+  section: PublicationKind;
   title: string;
 }
 
@@ -21,7 +17,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-GB", {
   timeZone: "UTC",
 });
 
-function PublicationEntry({ entry, density }: { entry: CatalogEntry; density: CatalogDensity }) {
+function PublicationEntry({ entry, density }: { entry: Publication; density: CatalogDensity }) {
   const date = entry.publishedAt
     ? dateFormatter.format(new Date(`${entry.publishedAt}T12:00:00Z`))
     : null;
@@ -44,7 +40,7 @@ function PublicationEntry({ entry, density }: { entry: CatalogEntry; density: Ca
   );
 }
 
-/** Shared catalog for Articles, Notes, Common Pitfalls and Guidelines. */
+/** One catalog UI for Articles and Notes. */
 export default function PublicationCatalog({ section, title }: PublicationCatalogProps) {
   const [density, setDensity] = useState<CatalogDensity>("normal");
   const [topic, setTopic] = useState("all");
@@ -52,13 +48,13 @@ export default function PublicationCatalog({ section, title }: PublicationCatalo
   const topicId = useId();
   const sortId = useId();
 
-  const entries = useMemo(() => catalogEntries.filter((entry) => entry.section === section), [section]);
-  const topics = useMemo(() => [...new Set(entries.map((entry) => entry.topic))].sort(), [entries]);
+  const entries = useMemo(() => visiblePublications(section), [section]);
+  const topics = useMemo(() => [...new Set(entries.map((entry) => entry.category))].sort(), [entries]);
   const displayed = useMemo(() => {
-    const filtered = entries.filter((entry) => topic === "all" || entry.topic === topic);
+    const filtered = entries.filter((entry) => topic === "all" || entry.category === topic);
     return filtered.sort((a, b) => {
-      // Unpublished samples have no dates and always follow published material.
-      if (a.preview !== b.preview) return a.preview ? 1 : -1;
+      // Local draft entries follow published material.
+      if (a.status !== b.status) return a.status === "draft" ? 1 : -1;
       if (a.publishedAt && b.publishedAt) {
         const result = a.publishedAt.localeCompare(b.publishedAt);
         if (result !== 0) return sortOrder === "newest" ? -result : result;

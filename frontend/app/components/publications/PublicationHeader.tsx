@@ -8,7 +8,7 @@ export interface PublicationHeaderProps {
   illustration?: ReactNode | null;
 }
 
-/** Visual identity shared by Articles, Notes, Pitfalls and Guidelines. */
+/** Visual identity shared by Articles and Notes. */
 export function PublicationIcon() {
   return (
     <span className="pub-icon" aria-hidden="true">
@@ -41,7 +41,7 @@ export default function PublicationHeader({
             {publishedAt ? (
               <span className="pub-published">Published: <time dateTime={publishedAt}>{formatDate(publishedAt)}</time></span>
             ) : (
-              <span className="pub-preview-status">Design preview · Unpublished</span>
+              <span className="pub-preview-status">Draft · Unpublished</span>
             )}
           </div>
           <h1>{title}</h1>

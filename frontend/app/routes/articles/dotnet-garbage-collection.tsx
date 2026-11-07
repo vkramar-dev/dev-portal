@@ -1,3 +1,4 @@
+import { getPublication, publicationMeta } from "../../content/publications";
 import { Link } from "react-router";
 import PublicationLayout from "../../components/publications/PublicationLayout";
 import {
@@ -8,17 +9,10 @@ import {
 import { GcGenerationsDiagram } from "../../components/publications/PublicationDiagrams";
 import { Box, Typography } from "@mui/material";
 
+const publication = getPublication("dotnet-garbage-collection");
+
 export function meta() {
-  return [
-    { title: "Understanding .NET Garbage Collection | Programming in Depth" },
-    {
-      name: "description",
-      content:
-        "How .NET garbage collection works: managed heap allocation, Gen 0/1/2, object survival, compaction, and the large object heap.",
-    },
-    // Keep the unfinished article out of search results until it is ready to publish.
-    { name: "robots", content: "noindex, nofollow" },
-  ];
+  return publicationMeta(publication);
 }
 
 const toc = [
@@ -220,10 +214,7 @@ function ManagedHeapFigure() {
 export default function DotNetGarbageCollection() {
   return (
     <PublicationLayout
-      kind="article"
-      title="Understanding .NET Garbage Collection"
-      category=".NET · Runtime"
-      summary="Allocations, generations, and object survival."
+      publication={publication}
       toc={toc}
       references={references}
       related={[{ title: "Memory in .NET", to: "/articles/memory-in-dotnet" }]}

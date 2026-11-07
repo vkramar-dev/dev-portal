@@ -2,10 +2,10 @@
 
 import type { GetInfo, GetAnnotations } from "react-router/internal";
 
-type Module = typeof import("../blocking-on-async.js")
+type Module = typeof import("../dotnet-strings.js")
 
 type Info = GetInfo<{
-  file: "routes/pitfalls/blocking-on-async.tsx",
+  file: "routes/notes/dotnet-strings.tsx",
   module: Module
 }>
 
@@ -13,8 +13,8 @@ type Matches = [{
   id: "root";
   module: typeof import("../../../root.js");
 }, {
-  id: "routes/pitfalls/blocking-on-async";
-  module: typeof import("../blocking-on-async.js");
+  id: "routes/notes/dotnet-strings";
+  module: typeof import("../dotnet-strings.js");
 }];
 
 type Annotations = GetAnnotations<Info & { module: Module, matches: Matches }>;

@@ -1,20 +1,13 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
-import ArticleLayout from "../../components/ArticleLayout";
+import PublicationLayout from "../../components/publications/PublicationLayout";
+import { getPublication, publicationMeta } from "../../content/publications";
 import type { TocItem } from "../../components/publications/PublicationBody";
 
-// Draft article: update the publication date when the text is ready to go live.
-const draftPublicationDate = "2026-10-30";
+const publication = getPublication("memory-in-dotnet");
 
 export function meta() {
-  return [
-    { title: "Memory in .NET — Overview | Programming in Depth" },
-    {
-      name: "description",
-      content:
-        "A practical map of memory in CoreCLR: thread stacks, managed heaps (SOH, LOH, POH), static storage, native memory and executable code.",
-    },
-  ];
+  return publicationMeta(publication);
 }
 
 const references = [
@@ -570,11 +563,8 @@ function ManagedHeapFigure() {
 export default function MemoryInDotNet() {
   const theme = useTheme();
   return (
-    <ArticleLayout
-      title="Memory in .NET — Overview"
-      category=".NET"
-      publishedAt={draftPublicationDate}
-      summary="Where .NET data lives, what controls its lifetime, and which choices are actually yours."
+    <PublicationLayout
+      publication={publication}
       references={references}
       toc={toc}
     >
@@ -1005,6 +995,6 @@ Marshal.FreeHGlobal(memory);`}
         <br />
         ...
       </Paragraph>
-    </ArticleLayout>
+    </PublicationLayout>
   );
 }
