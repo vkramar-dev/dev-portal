@@ -1,6 +1,7 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import PublicationLayout from "../../components/publications/PublicationLayout";
+import { CodeExample } from "../../components/publications/PublicationElements";
 import { getPublication, publicationMeta } from "../../content/publications";
 import type { TocItem } from "../../components/publications/PublicationBody";
 
@@ -94,118 +95,6 @@ function Paragraph({ children }: { children: ReactNode }) {
     <Typography component="p" variant="body1" sx={contentSx}>
       {children}
     </Typography>
-  );
-}
-
-// A lightweight C# highlighter for the article's short, static examples.
-// No runtime parser or syntax-highlighting dependency is required.
-const codeTokenPattern =
-  /\/\/.*$|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:abstract|as|async|await|bool|break|byte|catch|char|class|const|decimal|double|else|false|finally|float|for|foreach|if|int|internal|is|long|namespace|new|null|object|out|override|private|protected|public|readonly|ref|return|short|stackalloc|static|string|struct|this|throw|true|try|typeof|unsafe|using|var|void|while)\b|\b[A-Z][A-Za-z0-9_]*\b|\b\d[\d_]*(?:\.\d[\d_]*)?\b/g;
-
-function highlightCodeLine(line: string): ReactNode[] {
-  const parts: ReactNode[] = [];
-  let previousEnd = 0;
-
-  for (const match of line.matchAll(codeTokenPattern)) {
-    const index = match.index ?? 0;
-    if (index > previousEnd) parts.push(line.slice(previousEnd, index));
-
-    const token = match[0];
-    const color = token.startsWith("//")
-      ? "text.secondary"
-      : token.startsWith('"') || token.startsWith("'")
-        ? "success.main"
-        : /^\d/.test(token)
-          ? "secondary.main"
-          : /^[A-Z]/.test(token)
-            ? "info.main"
-            : "primary.main";
-
-    parts.push(
-      <Box component="span" key={`${index}-${token}`} sx={{ color, fontWeight: 500 }}>
-        {token}
-      </Box>,
-    );
-    previousEnd = index + token.length;
-  }
-
-  if (previousEnd < line.length) parts.push(line.slice(previousEnd));
-  return parts;
-}
-
-function CodeExample({ code, title }: { code: string; title?: string }) {
-  const lines = code.replace(/\n$/, "").split("\n");
-
-  return (
-    <Box
-      sx={{
-        my: 2.5,
-        border: "1px solid",
-        borderColor: "divider",
-        borderLeft: "3px solid",
-        borderLeftColor: "primary.main",
-        borderRadius: 1.5,
-        overflow: "hidden",
-        bgcolor: "background.paper",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          px: 1.75,
-          py: 0.75,
-          borderBottom: "1px solid",
-          borderColor: "divider",
-          bgcolor: "action.hover",
-        }}
-      >
-        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-          {title ?? "C#"}
-        </Typography>
-      </Box>
-
-      <Box sx={{ overflowX: "auto", py: 1.25 }}>
-        <Box
-          component="pre"
-          sx={{
-            "&&": {
-              m: 0,
-              p: 0,
-              bgcolor: "transparent",
-              borderRadius: 0,
-              fontSize: "0.86rem",
-              lineHeight: 1.85,
-              overflow: "visible",
-            },
-          }}
-        >
-          <Box
-            component="code"
-            sx={{ display: "block", fontFamily: '"Cascadia Code", Consolas, Monaco, monospace' }}
-          >
-            {lines.map((line, index) => (
-              <Box
-                component="span"
-                key={index}
-                sx={{
-                  display: "flex",
-                  width: "max-content",
-                  minWidth: "100%",
-                  whiteSpace: "pre",
-                  "&:hover": { bgcolor: "action.hover" },
-                }}
-              >
-                <Box component="span" sx={{ px: 2 }}>
-                  {highlightCodeLine(line)}
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Box>
-    </Box>
   );
 }
 

@@ -112,3 +112,6 @@
 .pub-table { min-width: 450px; }
 .pub-category-pill { background: var(--pind-accent); color: var(--pind-bg); }
 @media(max-width:600px){.pub-published,.pub-preview-status{font-size:10px}}
+
+/* Vector diagrams can switch palettes with the same MUI theme used by articles. */
+.pind-string-memory-diagram { display: block; width: 100%; height: auto; }

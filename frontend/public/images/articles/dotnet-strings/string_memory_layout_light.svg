@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="790" viewBox="0 0 1400 790" role="img" aria-labelledby="title desc">
+<title id="title">x64 layout of a four-character .NET string</title>
+<desc id="desc">The stack may hold one 8-byte reference. A newly allocated four-character string has a 32-byte managed-heap allocation: 8-byte object header, 8-byte method table pointer, 4-byte length, 8 bytes for UTF-16 characters, 2-byte zero terminator and 2-byte alignment padding.</desc>
+<defs><marker id="arrowhead" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11Z" fill="#8054a0"/></marker></defs>
+<rect x="0" y="0" width="1400" height="790" fill="#ffffff" stroke="none" stroke-width="1"></rect>
+<text x="54" y="57" fill="#a65b32" font-size="26" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="start">STRING MEMORY LAYOUT</text>
+<text x="54" y="107" fill="#183442" font-size="32" font-weight="650" font-family="Consolas, Menlo, monospace" text-anchor="start">string str = &quot;.NET&quot;;</text>
+<text x="1324" y="106" fill="#526d7b" font-size="20" font-weight="450" font-family="Arial, Helvetica, sans-serif" text-anchor="end">x64 · illustrative</text>
+<rect x="52" y="155" width="460" height="555" fill="#f7fafb" stroke="#8daab7" stroke-width="2"></rect>
+<rect x="555" y="155" width="792" height="555" fill="#f7fafb" stroke="#8daab7" stroke-width="2"></rect>
+<text x="282" y="207" fill="#183442" font-size="29" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">Thread Stack</text>
+<text x="951" y="207" fill="#183442" font-size="29" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">Managed Heap · SOH</text>
+<text x="951" y="240" fill="#526d7b" font-size="18" font-weight="450" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">Generation 0 for a newly allocated string</text>
+<rect x="115" y="270" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<text x="278" y="306" fill="#526d7b" font-size="27" font-weight="500" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">…</text>
+<rect x="115" y="325" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<rect x="115" y="380" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<text x="278" y="416" fill="#526d7b" font-size="27" font-weight="500" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">…</text>
+<rect x="115" y="435" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<text x="278" y="471" fill="#526d7b" font-size="27" font-weight="500" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">…</text>
+<rect x="115" y="490" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<text x="278" y="526" fill="#526d7b" font-size="27" font-weight="500" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">…</text>
+<rect x="115" y="545" width="325" height="55" fill="#f3f8f8" stroke="#8daab7" stroke-width="1"></rect>
+<text x="278" y="581" fill="#526d7b" font-size="27" font-weight="500" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">…</text>
+<rect x="115" y="325" width="325" height="55" fill="#f5eff9" stroke="#8054a0" stroke-width="2.5"></rect>
+<text x="82" y="360" fill="#183442" font-size="26" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="start">str</text>
+<text x="277" y="350" fill="#76489f" font-size="24" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">reference</text>
+<text x="277" y="373" fill="#526d7b" font-size="19" font-weight="450" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">8 bytes</text>
+<rect x="607" y="270" width="687" height="55" fill="#e5eef5" stroke="#8daab7" stroke-width="2"></rect>
+<text x="629" y="303" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">Object header</text>
+<text x="1274" y="304" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">8 B</text>
+<rect x="607" y="325" width="687" height="55" fill="#f5eff9" stroke="#8054a0" stroke-width="2"></rect>
+<text x="629" y="358" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">MethodTable pointer</text>
+<text x="1274" y="359" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">8 B</text>
+<rect x="607" y="380" width="687" height="55" fill="#e7f4fc" stroke="#407b91" stroke-width="2"></rect>
+<text x="629" y="413" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">String length = 4</text>
+<text x="1274" y="414" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">4 B</text>
+<rect x="607" y="435" width="687" height="105" fill="#fff1d8" stroke="#b5833a" stroke-width="2"></rect>
+<text x="629" y="468" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">UTF-16 characters (.NET)</text>
+<text x="1274" y="469" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">8 B</text>
+<rect x="607" y="540" width="687" height="55" fill="#e7f4fc" stroke="#407b91" stroke-width="2"></rect>
+<text x="629" y="573" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">Null terminator (00 00)</text>
+<text x="1274" y="574" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">2 B</text>
+<rect x="607" y="595" width="687" height="55" fill="#ecf0f2" stroke="#9baab1" stroke-width="2"></rect>
+<text x="629" y="628" fill="#183442" font-size="24" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="start">Alignment padding</text>
+<text x="1274" y="629" fill="#183442" font-size="23" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="end">2 B</text>
+<rect x="844" y="471" width="90" height="53" fill="#f7fafb" stroke="#b5833a" stroke-width="1.5"></rect>
+<text x="889" y="492" fill="#744914" font-size="24" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">.</text>
+<text x="889" y="514" fill="#526d7b" font-size="17" font-weight="500" font-family="Consolas, Menlo, monospace" text-anchor="middle">2E 00</text>
+<rect x="936" y="471" width="90" height="53" fill="#f7fafb" stroke="#b5833a" stroke-width="1.5"></rect>
+<text x="981" y="492" fill="#744914" font-size="24" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">N</text>
+<text x="981" y="514" fill="#526d7b" font-size="17" font-weight="500" font-family="Consolas, Menlo, monospace" text-anchor="middle">4E 00</text>
+<rect x="1028" y="471" width="90" height="53" fill="#f7fafb" stroke="#b5833a" stroke-width="1.5"></rect>
+<text x="1073" y="492" fill="#744914" font-size="24" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">E</text>
+<text x="1073" y="514" fill="#526d7b" font-size="17" font-weight="500" font-family="Consolas, Menlo, monospace" text-anchor="middle">45 00</text>
+<rect x="1120" y="471" width="90" height="53" fill="#f7fafb" stroke="#b5833a" stroke-width="1.5"></rect>
+<text x="1165" y="492" fill="#744914" font-size="24" font-weight="700" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">T</text>
+<text x="1165" y="514" fill="#526d7b" font-size="17" font-weight="500" font-family="Consolas, Menlo, monospace" text-anchor="middle">54 00</text>
+<path d="M 443 352 L 592 352" fill="none" stroke="#8054a0" stroke-width="4" marker-end="url(#arrowhead)" />
+<text x="282" y="637" fill="#526d7b" font-size="20" font-weight="650" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">Pointer-sized value: 8 B</text>
+<text x="951" y="686" fill="#183442" font-size="25" font-weight="750" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">Total allocation: 32 bytes</text>
+<text x="55" y="745" fill="#526d7b" font-size="19" font-weight="450" font-family="Arial, Helvetica, sans-serif" text-anchor="start">Relative object layout on x64 CoreCLR; row heights are schematic, not proportional to byte size.</text>
+<text x="55" y="772" fill="#526d7b" font-size="19" font-weight="450" font-family="Arial, Helvetica, sans-serif" text-anchor="start">Literal values may be interned; the local reference may reside in a register rather than on the stack.</text>
+</svg>

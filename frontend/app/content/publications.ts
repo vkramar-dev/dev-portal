@@ -45,13 +45,13 @@ export const publications = {
     status: "draft",
   },
   "dotnet-strings": {
-    kind: "note",
-    url: "/notes/dotnet-strings",
+    kind: "article",
+    url: "/articles/dotnet-strings",
     title: ".NET Strings & the Two-Byte Tax",
     category: ".NET · Runtime Internals",
-    summary: "UTF-16 representation, string immutability, and the details behind .NET strings.",
+    summary: "What .NET strings really cost in memory, how other runtimes handle ASCII, and ways to avoid unnecessary UTF-16 storage.",
     description:
-      "Explore how .NET strings use UTF-16, how Length works, and why strings are immutable.",
+      "Explore the memory layout of .NET strings, UTF-16 overhead, string interning, Java/Python/Node.js comparisons and practical UTF-8 alternatives.",
     status: "draft",
   },
 } satisfies Record<string, Publication>;

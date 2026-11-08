@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+<title id="title">Programming in Depth (PinD)</title>
+<rect width="64" height="64" rx="11" fill="#16394c"/>
+<path d="M24 50V17H37c8 0 13 5 13 13s-5 13-13 13H24" fill="none" stroke="#dc9362" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter" opacity=".92"/>
+<path d="M17 47V12h14c8 0 13 5 13 13s-5 13-13 13H17" fill="none" stroke="#f4fbfe" stroke-width="5.5" stroke-linecap="square" stroke-linejoin="miter"/>
+</svg>

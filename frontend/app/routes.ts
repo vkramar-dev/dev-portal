@@ -5,6 +5,7 @@ export default [
   route("articles", "routes/articles.tsx"),
   route("articles/dotnet-garbage-collection", "routes/articles/dotnet-garbage-collection.tsx"),
   route("articles/memory-in-dotnet", "routes/articles/memory-in-dotnet.tsx"),
+  route("articles/dotnet-strings", "routes/articles/dotnet-strings.tsx"),
   route("notes", "routes/notes.tsx"),
   route("notes/dotnet-strings", "routes/notes/dotnet-strings.tsx"),
   route("quiz", "routes/quiz.tsx"),

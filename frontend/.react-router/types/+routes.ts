@@ -23,6 +23,9 @@ type Pages = {
   "/articles/memory-in-dotnet": {
     params: {};
   };
+  "/articles/dotnet-strings": {
+    params: {};
+  };
   "/notes": {
     params: {};
   };
@@ -46,7 +49,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/articles" | "/articles/dotnet-garbage-collection" | "/articles/memory-in-dotnet" | "/notes" | "/notes/dotnet-strings" | "/quiz" | "/videos" | "/events" | "/about";
+    page: "/" | "/articles" | "/articles/dotnet-garbage-collection" | "/articles/memory-in-dotnet" | "/articles/dotnet-strings" | "/notes" | "/notes/dotnet-strings" | "/quiz" | "/videos" | "/events" | "/about";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -63,6 +66,10 @@ type RouteFiles = {
   "routes/articles/memory-in-dotnet.tsx": {
     id: "routes/articles/memory-in-dotnet";
     page: "/articles/memory-in-dotnet";
+  };
+  "routes/articles/dotnet-strings.tsx": {
+    id: "routes/articles/dotnet-strings";
+    page: "/articles/dotnet-strings";
   };
   "routes/notes.tsx": {
     id: "routes/notes";
@@ -96,6 +103,7 @@ type RouteModules = {
   "routes/articles": typeof import("./app/routes/articles.tsx");
   "routes/articles/dotnet-garbage-collection": typeof import("./app/routes/articles/dotnet-garbage-collection.tsx");
   "routes/articles/memory-in-dotnet": typeof import("./app/routes/articles/memory-in-dotnet.tsx");
+  "routes/articles/dotnet-strings": typeof import("./app/routes/articles/dotnet-strings.tsx");
   "routes/notes": typeof import("./app/routes/notes.tsx");
   "routes/notes/dotnet-strings": typeof import("./app/routes/notes/dotnet-strings.tsx");
   "routes/quiz": typeof import("./app/routes/quiz.tsx");
