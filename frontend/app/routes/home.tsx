@@ -1,3 +1,4 @@
+import { pageMeta } from "../content/seo";
 import { Link } from "react-router";
 import { visiblePublications } from "../content/publications";
 
@@ -19,14 +20,7 @@ const topics = [
 ] as const;
 
 export function meta() {
-  return [
-    { title: "Programming in Depth | .NET Engineering in Detail" },
-    {
-      name: "description",
-      content:
-        "Engineering behind real-world .NET applications: CLR, ASP.NET Core, EF Core, SQL Server, software architecture, performance and security.",
-    },
-  ];
+  return pageMeta({ path: "/", title: "Programming in Depth | .NET Engineering in Detail", description: "Engineering behind real-world .NET applications: CLR, ASP.NET Core, EF Core, SQL Server, software architecture, performance and security." });
 }
 
 function ResearchIcon() {

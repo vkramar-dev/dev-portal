@@ -1,10 +1,8 @@
+import { pageMeta } from "../content/seo";
 import SectionLanding from "../components/SectionLanding";
 
 export function meta() {
-  return [
-    { title: "About | Programming in Depth" },
-    { name: "description", content: "Explore about on Programming in Depth, an independent .NET and software engineering publication." },
-  ];
+  return pageMeta({ path: "/about", title: "About | Programming in Depth", description: "About Programming in Depth, an independent engineering publication focused on .NET internals, rigorous experiments and practical engineering trade-offs." });
 }
 
 export default function AboutPage() {

@@ -8,6 +8,8 @@
  * Route components contain the article BODY only; do not repeat titles,
  * summaries, publication dates or publication status in the route files.
  */
+import { pageMeta, SITE_NAME, SITE_URL } from "./seo";
+
 export type PublicationKind = "article" | "note";
 interface PublicationDetails {
   kind: PublicationKind;
@@ -87,11 +89,35 @@ export function visiblePublications(kind?: PublicationKind): Publication[] {
   );
 }
 
-/** Page SEO comes from the same metadata as the visible article heading. */
+/** Search and social metadata for an individual, pre-rendered publication. */
 export function publicationMeta(publication: Publication) {
+  const description = publication.description ?? publication.summary;
+  const title = `${publication.title} | ${SITE_NAME}`;
   return [
-    { title: `${publication.title} | Programming in Depth` },
-    { name: "description", content: publication.description ?? publication.summary },
-    ...(publication.status === "draft" ? [{ name: "robots", content: "noindex, nofollow" }] : []),
+    ...pageMeta({
+      path: publication.url,
+      title,
+      description,
+      type: "article",
+      noindex: publication.status === "draft",
+    }),
+    ...(publication.publishedAt
+      ? [
+          { property: "article:published_time", content: publication.publishedAt },
+          {
+            "script:ld+json": {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: publication.title,
+              description,
+              url: `${SITE_URL}${publication.url}`,
+              datePublished: publication.publishedAt,
+              inLanguage: "en",
+              author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+              publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+            },
+          },
+        ]
+      : []),
   ];
 }

@@ -1,10 +1,8 @@
+import { pageMeta } from "../content/seo";
 import PublicationCatalog from "../components/catalog/PublicationCatalog";
 
 export function meta() {
-  return [
-    { title: "Notes | Programming in Depth" },
-    { name: "description", content: "Explore notes on Programming in Depth, an independent .NET and software engineering publication." },
-  ];
+  return pageMeta({ path: "/notes", title: "Notes | Programming in Depth", description: "Explore notes on Programming in Depth, an independent .NET and software engineering publication.", noindex: true });
 }
 
 export default function NotesPage() {
