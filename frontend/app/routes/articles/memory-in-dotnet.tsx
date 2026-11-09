@@ -114,19 +114,19 @@ function MemoryRegion({
         borderColor: "divider",
         borderRadius: 1.5,
         bgcolor: "background.paper",
-        p: { xs: 1.5, md: 2 },
+        p: { xs: 1.5, md: 1.25 },
         minWidth: 0,
         height: "100%",
       }}
     >
-      <Typography variant="subtitle2" sx={{ fontWeight: 700, overflowWrap: "anywhere" }}>
+      <Typography variant="subtitle2" sx={{ fontWeight: 700, overflowWrap: "normal", wordBreak: "normal" }}>
         {title}
       </Typography>
       {detail && (
         <Typography
           variant="caption"
           color="text.secondary"
-          sx={{ display: "block", mt: 0.5, lineHeight: 1.5 }}
+          sx={{ display: "block", mt: 0.5, lineHeight: 1.5, overflowWrap: "normal", wordBreak: "normal" }}
         >
           {detail}
         </Typography>
@@ -141,7 +141,7 @@ function MemoryLayoutFigure() {
   const sohGenerations = ["Gen 0", "Gen 1", "Gen 2"];
 
   return (
-    <Box component="figure" aria-labelledby="memory-layout-caption" sx={{ my: 4, mx: 0 }}>
+    <Box component="figure" aria-labelledby="memory-layout-caption" sx={{ my: 4, mx: 0, containerType: "inline-size" }}>
       <Box
         sx={{
           border: "1px solid",
@@ -162,7 +162,9 @@ function MemoryLayoutFigure() {
             gridTemplateColumns: {
               xs: "minmax(0, 1fr)",
               sm: "repeat(2, minmax(0, 1fr))",
-              md: "1fr minmax(0, 3.3fr) 1.05fr 1.05fr 1.25fr",
+            },
+            "@container (min-width: 790px)": {
+              gridTemplateColumns: "1fr minmax(0, 3.3fr) 1.05fr 1.05fr 1.25fr",
             },
             alignItems: "stretch",
           }}
@@ -176,7 +178,8 @@ function MemoryLayoutFigure() {
               borderRadius: 2,
               p: 1,
               bgcolor: "background.default",
-              gridColumn: { sm: "span 2", md: "auto" },
+              gridColumn: { sm: "span 2" },
+              "@container (min-width: 790px)": { gridColumn: "auto" },
             }}
           >
             <Typography

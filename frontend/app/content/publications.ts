@@ -44,12 +44,24 @@ export const publications = {
       "How .NET garbage collection works: managed heap allocation, Gen 0/1/2, object survival, compaction, and the large object heap.",
     status: "draft",
   },
+  "dotnet-11-csharp-15": {
+    kind: "article",
+    url: "/articles/dotnet-11-csharp-15",
+    title: ".NET 11 / C# 15",
+    category: ".NET · C#",
+    summary:
+      "Runtime Async, decimal numeric types, unions, extension indexers, and labeled loops, ...",
+    description:
+      "An engineer's practical take on .NET 11 and C# 15: Runtime Async, Decimal32/64/128, union return types, extension indexers, and labeled break/continue.",
+    status: "draft",
+  },
   "dotnet-strings": {
     kind: "article",
     url: "/articles/dotnet-strings",
     title: ".NET Strings & the Two-Byte Tax",
     category: ".NET · Runtime Internals",
-    summary: "What .NET strings really cost in memory, how other runtimes handle ASCII, and ways to avoid unnecessary UTF-16 storage.",
+    summary:
+      "What .NET strings really cost in memory, how other runtimes handle ASCII, and ways to avoid unnecessary UTF-16 storage.",
     description:
       "Explore the memory layout of .NET strings, UTF-16 overhead, string interning, Java/Python/Node.js comparisons and practical UTF-8 alternatives.",
     status: "draft",

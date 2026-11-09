@@ -12,7 +12,7 @@
 .pub-meta i{width:3px;height:3px;border-radius:50%;background:var(--pind-muted)}
 .pub-share{color:var(--pind-accent);margin-left:auto}
 .pub-grid{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:28px;padding-top:25px}
-.pub-content{max-width:780px;min-width:0}
+.pub-content{max-width:818px;min-width:0}
 .pub-content section{scroll-margin-top:25px}
 .pub-content h2{font:400 25px/1.23 Georgia,"Times New Roman",serif;letter-spacing:-.038em;margin:31px 0 13px;color:var(--pind-ink)}
 .pub-content section:first-child h2{margin-top:0}
@@ -76,7 +76,7 @@
 .pub-related a,.back-link{font-size:12px}
 .back-link{display:inline-block;margin-top:27px;margin-bottom:25px;text-decoration:none}
 
-@media(max-width:980px){.pub-grid{grid-template-columns:1fr;gap:0}.pub-sidebar{display:none}.pub-content{max-width:720px}.pub-header{padding-top:23px}.pub-header h1{font-size:clamp(29px,4vw,35px)}}
+@media(max-width:980px){.pub-grid{grid-template-columns:1fr;gap:0}.pub-sidebar{display:none}.pub-content{max-width:758px}.pub-header{padding-top:23px}.pub-header h1{font-size:clamp(29px,4vw,35px)}}
 @media(max-width:600px){.pub-header{padding-top:20px}.pub-header h1{font-size:29px}.pub-deck{font-size:14px}.pub-grid{padding-top:18px}.pub-content p{font-size:14px;line-height:1.75}.pub-content h2{font-size:23px}.gc-diagram{gap:4px}.gc-arrow{font-size:15px}.generation{padding:8px 4px}.generation strong{font-size:17px}.generation span{font-size:7px}.generation small{font-size:9px}.utf-diagram{gap:7px}.unit{min-width:88px;padding:8px 4px}.unit b{font-size:15px}.diagram{padding:13px 11px}.pub-content .figure-note{font-size:10px}.bars>div{grid-template-columns:67px 1fr 20px;gap:6px}.code-panel pre{font-size:11px}}
 
 /* PinD Publication Study 02: shared header for Article / Note / Pitfall / Guideline */
@@ -93,7 +93,7 @@
 .pub-header-v2 .pub-deck {font-size:16px;color:var(--pind-ink);line-height:1.52;margin:0;max-width:740px}
 .pub-grid {padding-top:26px}
 .pub-grid--full {display:block}
-.pub-grid--full>.pub-content {max-width:760px}
+.pub-grid--full>.pub-content {max-width:798px}
 .pub-steps {font-size:14px;line-height:1.8;padding-left:23px;color:var(--pind-ink)}
 .pub-steps li {margin-bottom:9px}
 @media(max-width:980px){.pub-header-v2 {padding-top:25px}.pub-heading-row{grid-template-columns:74px minmax(0,1fr);gap:17px}.pub-icon{width:74px;height:74px}.pub-icon:before{width:71px;height:71px}.pub-icon svg{width:37px;height:37px}.pub-header-v2 h1{font-size:clamp(29px,3.3vw,39px);margin:11px 0 9px}.pub-header-v2 .pub-deck{font-size:14px}}

@@ -10,26 +10,31 @@ export function PublicationSection({ id, title, children }: { id: string; title:
 // Shared C# code highlighting for every publication. Keep it lightweight: our examples
 // are small and static, so no third-party syntax-highlighting runtime is needed.
 const codeTokenPattern =
-  /\/\/.*$|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:abstract|as|async|await|bool|break|byte|catch|char|class|const|decimal|double|else|false|finally|float|for|foreach|if|int|internal|is|long|namespace|new|null|object|out|override|private|protected|public|readonly|ref|return|short|stackalloc|static|string|struct|this|throw|true|try|typeof|unsafe|using|var|void|while)\b|\b[A-Z][A-Za-z0-9_]*\b|\b\d[\d_]*(?:\.\d[\d_]*)?\b/g;
+  /\/\/.*$|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b(?:abstract|as|async|await|bool|break|byte|case|catch|char|class|const|continue|decimal|double|else|enum|extension|false|finally|float|for|foreach|get|if|in|int|interface|internal|is|long|namespace|new|null|object|out|override|private|protected|public|readonly|record|ref|return|sealed|short|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|union|unsafe|using|var|void|while)\b|\b[A-Z][A-Za-z0-9_]*\b|\b\d[\d_]*(?:\.\d[\d_]*)?\b/g;
+const xmlTokenPattern = /<!--.*?-->|<\/?[A-Za-z][\w:.-]*|\/?>|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g;
 
-function highlightCodeLine(line: string): ReactNode[] {
+function highlightCodeLine(line: string, language: string): ReactNode[] {
   const parts: ReactNode[] = [];
   let previousEnd = 0;
+  const xml = language.toLowerCase() === "xml";
+  const tokenPattern = xml ? xmlTokenPattern : codeTokenPattern;
 
-  for (const match of line.matchAll(codeTokenPattern)) {
+  for (const match of line.matchAll(tokenPattern)) {
     const index = match.index ?? 0;
     if (index > previousEnd) parts.push(line.slice(previousEnd, index));
 
     const token = match[0];
-    const color = token.startsWith("//")
+    const color = token.startsWith("//") || token.startsWith("<!--")
       ? "text.secondary"
       : token.startsWith('"') || token.startsWith("'")
         ? "success.main"
-        : /^\d/.test(token)
-          ? "secondary.main"
-          : /^[A-Z]/.test(token)
-            ? "info.main"
-            : "primary.main";
+        : xml
+          ? token.startsWith("<") ? "info.main" : "primary.main"
+          : /^\d/.test(token)
+            ? "secondary.main"
+            : /^[A-Z]/.test(token)
+              ? "info.main"
+              : "primary.main";
 
     parts.push(<Box component="span" key={`${index}-${token}`} sx={{ color, fontWeight: 500 }}>{token}</Box>);
     previousEnd = index + token.length;
@@ -95,7 +100,7 @@ export function CodeExample({ code, language = "C#", title }: { code: string; la
           <Box component="code" sx={{ display: "block", fontFamily: '"Cascadia Code", Consolas, Monaco, monospace' }}>
             {lines.map((line, index) => (
               <Box component="span" key={index} sx={{ display: "flex", width: "max-content", minWidth: "100%", whiteSpace: "pre", "&:hover": { bgcolor: "action.hover" } }}>
-                <Box component="span" sx={{ px: 2 }}>{highlightCodeLine(line)}</Box>
+                <Box component="span" sx={{ px: 2 }}>{highlightCodeLine(line, language)}</Box>
               </Box>
             ))}
           </Box>
