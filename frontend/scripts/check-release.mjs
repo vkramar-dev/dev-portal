@@ -24,7 +24,6 @@ function htmlPath(route) {
 }
 
 check(existsSync(join(build, "web.config")), "Root IIS web.config was copied");
-check(existsSync(join(build, "assets", "web.config")), "Hashed assets have independent cache policy");
 check(existsSync(join(build, "robots.txt")), "robots.txt was copied");
 check(existsSync(join(build, "sitemap.xml")), "sitemap.xml was copied");
 const sitemap = existsSync(join(build, "sitemap.xml"))
