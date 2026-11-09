@@ -51,7 +51,7 @@ function ResearchIcon() {
 export default function Home() {
   const latestResearch = visiblePublications("article")
     .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""))
-    .slice(0, 3);
+    .slice(0, 5);
 
   return (
     <div className="site-shell home-page">
@@ -72,8 +72,9 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="home-research" aria-label="Latest research">
+      <section className="home-research" aria-labelledby="home-research-title">
         <div className="home-section-heading">
+          <h2 id="home-research-title">Recently Added</h2>
           <Link to="/articles" className="home-section-all-link">
             All articles <span aria-hidden="true">↗</span>
           </Link>
@@ -81,17 +82,14 @@ export default function Home() {
         <div className="home-research-list">
           {latestResearch.map((article) => (
             <article className="home-research-item" key={article.url}>
-              <ResearchIcon />
-              <div className="home-research-copy">
-                <div className="home-research-category">{article.category}</div>
-                <h3>
-                  <Link to={article.url}>{article.title}</Link>
-                </h3>
-                <p>{article.summary}</p>
-                <Link to={article.url} className="home-read-link">
-                  Read article <span aria-hidden="true">↗</span>
-                </Link>
-              </div>
+              <Link to={article.url} className="home-research-card-link">
+                <ResearchIcon />
+                <div className="home-research-copy">
+                  <div className="home-research-category">{article.category}</div>
+                  <h3>{article.title}</h3>
+                  <p>{article.summary}</p>
+                </div>
+              </Link>
             </article>
           ))}
         </div>
