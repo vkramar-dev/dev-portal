@@ -77,7 +77,6 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [authMessage, setAuthMessage] = useState("");
 
   const query = search.trim().toLocaleLowerCase();
   const results = query
@@ -89,7 +88,6 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
   useEffect(() => {
     setMenuOpen(false);
     setSearchOpen(false);
-    setAuthMessage("");
   }, [location.pathname]);
 
   useEffect(() => {
@@ -120,11 +118,6 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
     setSearch("");
     setSearchOpen(false);
     void navigate(url);
-  }
-
-  function showAuthMessage() {
-    setAuthMessage("Authentication is not available yet. All published content remains public.");
-    setMenuOpen(false);
   }
 
   return (
@@ -208,14 +201,6 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
           >
             <ThemeIcon dark={dark} />
           </button>
-          <div className="desktop-auth">
-            <button type="button" className="auth-action" onClick={showAuthMessage}>
-              Log in
-            </button>
-            <button type="button" className="auth-action signup-action" onClick={showAuthMessage}>
-              Sign up
-            </button>
-          </div>
           <button
             type="button"
             className="mobile-menu-toggle"
@@ -247,23 +232,7 @@ export default function NavBar({ dark, onToggleTheme }: NavBarProps) {
             {section.title}
           </NavLink>
         ))}
-        <div className="mobile-auth">
-          <button type="button" onClick={showAuthMessage}>
-            Log in
-          </button>
-          <button type="button" onClick={showAuthMessage}>
-            Sign up
-          </button>
-        </div>
       </nav>
-      {authMessage && (
-        <div className="auth-notice" role="status">
-          {authMessage}
-          <button type="button" aria-label="Dismiss message" onClick={() => setAuthMessage("")}>
-            ×
-          </button>
-        </div>
-      )}
     </header>
   );
 }

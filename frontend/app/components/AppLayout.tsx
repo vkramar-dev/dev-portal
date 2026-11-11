@@ -16,7 +16,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
     if (stored === "dark") setColorMode("dark");
   }, []);
 
-  useEffect(() => { document.documentElement.dataset.theme = colorMode; }, [colorMode]);
+  // The theme attribute is set by a small script in <head> before CSS is painted.
+  // Do not overwrite it with the default "light" value during hydration.
   const theme = useMemo(() => createTheme({
     palette: {
       mode: colorMode,
@@ -28,11 +29,10 @@ export default function AppLayout({ children }: AppLayoutProps) {
   }), [colorMode]);
 
   function toggleTheme() {
-    setColorMode((mode) => {
-      const next = mode === "light" ? "dark" : "light";
-      try { localStorage.setItem(THEME_KEY, next); } catch { /* Optional persistence. */ }
-      return next;
-    });
+    const next = colorMode === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* Optional persistence. */ }
+    setColorMode(next);
   }
 
   return (

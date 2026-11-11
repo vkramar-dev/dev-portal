@@ -84,7 +84,7 @@ input:focus-visible {
   min-width: 0;
 }
 
-/* Header: compact brand / single global search / auth; second-level nav. */
+/* Header: compact brand / global search / theme toggle; second-level nav. */
 .site-header {
   position: relative;
   z-index: 10;
@@ -174,17 +174,11 @@ input:focus-visible {
   opacity: 0.7;
   white-space: nowrap;
 }
-.header-actions,
-.desktop-auth {
+.header-actions {
   display: flex;
   align-items: center;
   white-space: nowrap;
-}
-.header-actions {
   gap: 14px;
-}
-.desktop-auth {
-  gap: 15px;
 }
 .theme-toggle,
 .mobile-menu-toggle {
@@ -196,21 +190,6 @@ input:focus-visible {
   border-radius: 5px;
   color: var(--pind-ink);
   background: var(--pind-surface);
-}
-.auth-action {
-  border: 0;
-  padding: 5px 0;
-  background: transparent;
-  color: var(--pind-ink);
-  font-weight: 650;
-  font-size: 12px;
-}
-.auth-action:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.signup-action {
-  color: var(--pind-accent);
 }
 .mobile-menu-toggle {
   display: none;
@@ -245,32 +224,6 @@ input:focus-visible {
   text-decoration: underline;
   text-underline-offset: 5px;
   text-decoration-thickness: 2px;
-}
-.mobile-auth {
-  display: none;
-}
-.auth-notice {
-  position: absolute;
-  top: calc(100% + 5px);
-  right: max(16px, calc((100vw - 1160px) / 2));
-  max-width: min(360px, calc(100vw - 32px));
-  display: flex;
-  align-items: start;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 6px;
-  background: var(--pind-surface);
-  border: 1px solid var(--pind-line);
-  box-shadow: 0 8px 22px #0002;
-  color: var(--pind-ink);
-  font-size: 12px;
-}
-.auth-notice button {
-  background: none;
-  border: none;
-  color: var(--pind-accent);
-  font-size: 19px;
-  padding: 0;
 }
 .search-results {
   position: absolute;
@@ -571,9 +524,6 @@ input:focus-visible {
   .header-actions {
     gap: 12px;
   }
-  .desktop-auth {
-    gap: 13px;
-  }
   .header-navigation {
     gap: 17px;
   }
@@ -625,23 +575,6 @@ input:focus-visible {
   }
   .site-brand-title {
     font-size: clamp(18px, 5vw, 22px);
-  }
-  .desktop-auth {
-    display: none;
-  }
-  .mobile-auth {
-    display: flex;
-    gap: 20px;
-    padding: 12px 0 7px;
-    border-top: 1px solid var(--pind-line);
-  }
-  .mobile-auth button {
-    background: none;
-    border: none;
-    padding: 3px 0;
-    color: var(--pind-accent);
-    font-size: 13px;
-    font-weight: 650;
   }
   .header-search {
     height: 39px;

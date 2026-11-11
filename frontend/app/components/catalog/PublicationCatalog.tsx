@@ -1,9 +1,10 @@
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { visiblePublications, type Publication, type PublicationKind } from "../../content/publications";
 
 export type CatalogDensity = "normal" | "compact";
 export type CatalogSortOrder = "newest" | "oldest";
+const CATALOG_DENSITY_KEY = "pind-catalog-density";
 
 interface PublicationCatalogProps {
   section: PublicationKind;
@@ -43,6 +44,18 @@ function PublicationEntry({ entry, density }: { entry: Publication; density: Cat
 /** One catalog UI for Articles and Notes. */
 export default function PublicationCatalog({ section, title }: PublicationCatalogProps) {
   const [density, setDensity] = useState<CatalogDensity>("normal");
+  useEffect(() => {
+    // Restore after hydration: prerendered HTML must match the first React render.
+    try {
+      const stored = localStorage.getItem(CATALOG_DENSITY_KEY);
+      if (stored === "normal" || stored === "compact") setDensity(stored);
+    } catch { /* Storage can be blocked. */ }
+  }, []);
+
+  function changeDensity(next: CatalogDensity) {
+    setDensity(next);
+    try { localStorage.setItem(CATALOG_DENSITY_KEY, next); } catch { /* Optional persistence. */ }
+  }
   const [topic, setTopic] = useState("all");
   const [sortOrder, setSortOrder] = useState<CatalogSortOrder>("newest");
   const topicId = useId();
@@ -90,9 +103,9 @@ export default function PublicationCatalog({ section, title }: PublicationCatalo
           </span>
           <div className="publication-catalog-density" role="group" aria-label="List appearance">
             <button type="button" className={density === "normal" ? "active" : ""}
-              aria-pressed={density === "normal"} onClick={() => setDensity("normal")}>Normal</button>
+              aria-pressed={density === "normal"} onClick={() => changeDensity("normal")}>Normal</button>
             <button type="button" className={density === "compact" ? "active" : ""}
-              aria-pressed={density === "compact"} onClick={() => setDensity("compact")}>Compact</button>
+              aria-pressed={density === "compact"} onClick={() => changeDensity("compact")}>Compact</button>
           </div>
         </div>
       </div>
