@@ -6,11 +6,14 @@ const build = join(process.cwd(), "build", "client");
 const origin = "https://programming-in-depth.com";
 // Update this list when publishing a new article, together with sitemap.xml.
 const routes = [
-  "/", "/articles", "/about",
+  "/",
+  "/articles",
+  "/about",
   "/articles/memory-in-dotnet",
   "/articles/dotnet-garbage-collection",
   "/articles/dotnet-11-csharp-15",
   "/articles/dotnet-strings",
+  "/articles/when-to-use-valuetask",
 ];
 const comingSoon = ["/notes", "/quiz", "/videos", "/events"];
 let failures = 0;
@@ -27,7 +30,8 @@ check(existsSync(join(build, "web.config")), "Root IIS web.config was copied");
 check(existsSync(join(build, "robots.txt")), "robots.txt was copied");
 check(existsSync(join(build, "sitemap.xml")), "sitemap.xml was copied");
 const sitemap = existsSync(join(build, "sitemap.xml"))
-  ? readFileSync(join(build, "sitemap.xml"), "utf8") : "";
+  ? readFileSync(join(build, "sitemap.xml"), "utf8")
+  : "";
 for (const route of routes) {
   const path = htmlPath(route);
   const url = `${origin}${route}`;
@@ -50,5 +54,7 @@ if (failures) {
   console.error(`\n${failures} release check(s) failed.`);
   process.exitCode = 1;
 } else {
-  console.log("\nStatic release checks passed. Live IIS behavior still requires production testing.");
+  console.log(
+    "\nStatic release checks passed. Live IIS behavior still requires production testing.",
+  );
 }

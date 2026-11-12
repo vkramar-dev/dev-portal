@@ -26,6 +26,9 @@ type Pages = {
   "/articles/dotnet-strings": {
     params: {};
   };
+  "/articles/when-to-use-valuetask": {
+    params: {};
+  };
   "/articles/dotnet-11-csharp-15": {
     params: {};
   };
@@ -52,7 +55,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/articles" | "/articles/dotnet-garbage-collection" | "/articles/memory-in-dotnet" | "/articles/dotnet-strings" | "/articles/dotnet-11-csharp-15" | "/notes" | "/notes/dotnet-strings" | "/quiz" | "/videos" | "/events" | "/about";
+    page: "/" | "/articles" | "/articles/dotnet-garbage-collection" | "/articles/memory-in-dotnet" | "/articles/dotnet-strings" | "/articles/when-to-use-valuetask" | "/articles/dotnet-11-csharp-15" | "/notes" | "/notes/dotnet-strings" | "/quiz" | "/videos" | "/events" | "/about";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -73,6 +76,10 @@ type RouteFiles = {
   "routes/articles/dotnet-strings.tsx": {
     id: "routes/articles/dotnet-strings";
     page: "/articles/dotnet-strings";
+  };
+  "routes/articles/when-to-use-valuetask.tsx": {
+    id: "routes/articles/when-to-use-valuetask";
+    page: "/articles/when-to-use-valuetask";
   };
   "routes/articles/dotnet-11-csharp-15.tsx": {
     id: "routes/articles/dotnet-11-csharp-15";
@@ -111,6 +118,7 @@ type RouteModules = {
   "routes/articles/dotnet-garbage-collection": typeof import("./app/routes/articles/dotnet-garbage-collection.tsx");
   "routes/articles/memory-in-dotnet": typeof import("./app/routes/articles/memory-in-dotnet.tsx");
   "routes/articles/dotnet-strings": typeof import("./app/routes/articles/dotnet-strings.tsx");
+  "routes/articles/when-to-use-valuetask": typeof import("./app/routes/articles/when-to-use-valuetask.tsx");
   "routes/articles/dotnet-11-csharp-15": typeof import("./app/routes/articles/dotnet-11-csharp-15.tsx");
   "routes/notes": typeof import("./app/routes/notes.tsx");
   "routes/notes/dotnet-strings": typeof import("./app/routes/notes/dotnet-strings.tsx");

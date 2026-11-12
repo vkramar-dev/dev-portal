@@ -53,7 +53,8 @@ export const publications = {
     url: "/articles/dotnet-11-csharp-15",
     title: ".NET 11 / C# 15",
     category: ".NET · C#",
-    summary: "Runtime Async, decimal numeric types, unions, extension indexers, and labeled loops — which .NET 11 and C# 15 changes are actually useful?",
+    summary:
+      "Runtime Async, decimal numeric types, unions, extension indexers, and labeled loops — which .NET 11 and C# 15 changes are actually useful?",
     description:
       "An engineer's practical take on .NET 11 and C# 15: Runtime Async, Decimal32/64/128, union return types, extension indexers, and labeled break/continue.",
     status: "published",
@@ -64,11 +65,23 @@ export const publications = {
     url: "/articles/dotnet-strings",
     title: ".NET Strings & the Two-Byte Tax",
     category: ".NET · Runtime Internals",
-    summary: "What .NET strings really cost in memory, how other runtimes handle ASCII, and ways to avoid unnecessary UTF-16 storage.",
+    summary:
+      "What .NET strings really cost in memory, how other runtimes handle ASCII, and ways to avoid unnecessary UTF-16 storage.",
     description:
       "Explore the memory layout of .NET strings, UTF-16 overhead, string interning, Java/Python/Node.js comparisons and practical UTF-8 alternatives.",
     status: "published",
     publishedAt: "2026-11-10",
+  },
+  "when-to-use-valuetask": {
+    kind: "article",
+    url: "/articles/when-to-use-valuetask",
+    title: "When to use ValueTask?",
+    category: ".NET · Runtime Internals",
+    summary: "When ValueTask reduces allocations — and why Task should remain the default choice.",
+    description:
+      "When to use ValueTask instead of Task in .NET, how synchronous completion reduces managed heap allocations, and how IValueTaskSource enables pooling.",
+    status: "published",
+    publishedAt: "2026-11-12",
   },
 } satisfies Record<string, Publication>;
 
