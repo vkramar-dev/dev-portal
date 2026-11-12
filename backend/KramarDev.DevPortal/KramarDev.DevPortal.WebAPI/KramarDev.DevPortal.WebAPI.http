@@ -1,0 +1,6 @@
+@KramarDev.DevPortal.WebAPI_HostAddress = httpы://localhost:7096
+
+POST {{KramarDev.DevPortal.WebAPI_HostAddress}}/api/app/visit
+Accept: application/json
+
+###

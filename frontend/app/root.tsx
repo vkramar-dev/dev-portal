@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import AppLayout from "./components/AppLayout";
+import VisitTracker from "./components/VisitTracker";
 import "./styles/site.css";
 import "./styles/publication.css";
 import "./styles/catalog.css";
@@ -27,6 +28,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <VisitTracker />
         <AppLayout><Outlet /></AppLayout>
         <ScrollRestoration />
         <Scripts />
