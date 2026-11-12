@@ -460,33 +460,6 @@ function ManagedHeapFigure() {
   );
 }
 
-// function FigurePlaceholder({ number, title }: { number: number; title: string }) {
-//   return (
-//     <Box component="figure" sx={{ my: 3, mx: 0 }}>
-//       <Box
-//         sx={{
-//           minHeight: 132,
-//           border: "1px dashed",
-//           borderColor: "divider",
-//           borderRadius: 2,
-//           bgcolor: "action.hover",
-//           display: "flex",
-//           alignItems: "center",
-//           justifyContent: "center",
-//           p: 2,
-//         }}
-//       >
-//         <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
-//           Figure {number} · Illustration to be added
-//         </Typography>
-//       </Box>
-//       <Typography component="figcaption" variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-//         Figure {number}. {title}.
-//       </Typography>
-//     </Box>
-//   );
-// }
-
 export default function MemoryInDotNet() {
   const theme = useTheme();
   return (
